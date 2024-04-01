@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarEnthusiasts.Data.Models
 {
     public class CarBrand
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -12,5 +14,7 @@ namespace CarEnthusiasts.Data.Models
 
         [Required]
         public string ImageUrl { get; set; } = string.Empty;
+
+        public virtual ICollection<CarModel> Models { get; set; } = new List<CarModel>();
     }
 }

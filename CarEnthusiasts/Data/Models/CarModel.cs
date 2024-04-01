@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarEnthusiasts.Data.Models
 {
     public class CarModel
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -18,5 +20,11 @@ namespace CarEnthusiasts.Data.Models
 
         [Required]
         public string ImageUrl { get; set; } = string.Empty;
+
+        [Required]
+        public int BrandId { get; set; }
+
+        [ForeignKey(nameof(BrandId))]
+        public CarBrand Brand { get; set; } = null!;
     }
 }

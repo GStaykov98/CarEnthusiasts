@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarEnthusiasts.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240401145224_Initial")]
+    [Migration("20240401173537_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace CarEnthusiasts.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ImageURL")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -44,6 +44,32 @@ namespace CarEnthusiasts.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CarBrands");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/a/ae/Logo_audi.jpg",
+                            Name = "Audi"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ea/BMW_logo_%28white_%2B_grey_background_square%29.svg",
+                            Name = "BMW"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e6/Mercedes-Benz_logo_2.svg",
+                            Name = "Mercedes-Benz"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/44/Porsche_hood_emblem.png",
+                            Name = "Porsche"
+                        });
                 });
 
             modelBuilder.Entity("CarEnthusiasts.Data.Models.CarModel", b =>
@@ -54,7 +80,10 @@ namespace CarEnthusiasts.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ImageURL")
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -71,7 +100,83 @@ namespace CarEnthusiasts.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BrandId");
+
                     b.ToTable("CarModels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BrandId = 2,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/9/9e/BMW_M5_E39_%28Blue%29.jpg",
+                            Name = "5 Series (E39)",
+                            ProductionEndYear = 2003,
+                            ProductionStartYear = 1996
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BrandId = 2,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a7/BMW_5_SERIES_%28G30%29_HONG_KONG.jpg",
+                            Name = "5 Series (G30)",
+                            ProductionEndYear = 2023,
+                            ProductionStartYear = 2017
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BrandId = 1,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/8/80/AUDI_A4L_%28B9%29_China_%2812%29.jpg",
+                            Name = "A4 (B9)",
+                            ProductionEndYear = 2024,
+                            ProductionStartYear = 2015
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BrandId = 1,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e4/AUDI_A6L_C7_China_%2832%29.jpg",
+                            Name = "A6 (C7)",
+                            ProductionEndYear = 2018,
+                            ProductionStartYear = 2011
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BrandId = 3,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/a/ae/MERCEDES-BENZ_E-CLASS_SEDAN_%28W212%29_China.jpg",
+                            Name = "E-Class (W212)",
+                            ProductionEndYear = 2016,
+                            ProductionStartYear = 2009
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BrandId = 3,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/5/50/MERCEDES-BENZ_S-CLASS_%28W222%29_China_%2823%29.jpg",
+                            Name = "S-Class (W222)",
+                            ProductionEndYear = 2020,
+                            ProductionStartYear = 2013
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BrandId = 4,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/6/67/2016_Porsche_911_GT3_RS_Grey_FOS22.jpg",
+                            Name = "911 GT3 RS",
+                            ProductionEndYear = 2020,
+                            ProductionStartYear = 2011
+                        },
+                        new
+                        {
+                            Id = 8,
+                            BrandId = 4,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e2/PORSCHE_TAYCAN_China_%289%29.jpg",
+                            Name = "Taycan",
+                            ProductionEndYear = 2024,
+                            ProductionStartYear = 2020
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -276,6 +381,17 @@ namespace CarEnthusiasts.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CarEnthusiasts.Data.Models.CarModel", b =>
+                {
+                    b.HasOne("CarEnthusiasts.Data.Models.CarBrand", "Brand")
+                        .WithMany("Models")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -325,6 +441,11 @@ namespace CarEnthusiasts.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CarEnthusiasts.Data.Models.CarBrand", b =>
+                {
+                    b.Navigation("Models");
                 });
 #pragma warning restore 612, 618
         }
