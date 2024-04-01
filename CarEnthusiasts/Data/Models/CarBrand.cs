@@ -11,6 +11,6 @@ namespace CarEnthusiasts.Data.Models
         public string Name { get; set; } = string.Empty;
 
         [Required]
-        public string ImageURL { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
     }
 }

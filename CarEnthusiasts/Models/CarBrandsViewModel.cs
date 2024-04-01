@@ -9,11 +9,11 @@
         {
             Id = id;
             Name = name;
-            ImageURl = imageUrl;
+            ImageUrl = imageUrl;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ImageURl { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

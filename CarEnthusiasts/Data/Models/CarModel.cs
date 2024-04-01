@@ -17,6 +17,6 @@ namespace CarEnthusiasts.Data.Models
         public int ProductionEndYear { get; set; }
 
         [Required]
-        public string ImageURL { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
     }
 }

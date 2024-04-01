@@ -21,7 +21,7 @@ namespace CarEnthusiasts.Controllers
                 .Select(x => new CarBrandsViewModel(
                     x.Id,
                     x.Name,
-                    x.ImageURL))
+                    x.ImageUrl))
                 .ToListAsync();
 
             return View(cars);

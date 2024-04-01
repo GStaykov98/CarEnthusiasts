@@ -4,6 +4,7 @@ using CarEnthusiasts.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarEnthusiasts.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240401150544_Some data seeded")]
+    partial class Somedataseeded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +32,7 @@ namespace CarEnthusiasts.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("ImageURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -47,25 +49,25 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/a/ae/Logo_audi.jpg",
+                            ImageURL = "https://commons.wikimedia.org/wiki/File:Logo_audi.jpg",
                             Name = "Audi"
                         },
                         new
                         {
                             Id = 2,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ea/BMW_logo_%28white_%2B_grey_background_square%29.svg",
+                            ImageURL = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.m.wikipedia.org%2Fwiki%2FFile%3ABMW.svg&psig=AOvVaw0Xw_LM_e8pZUjufNUN4ZEC&ust=1712070180303000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOC78cikoYUDFQAAAAAdAAAAABAE",
                             Name = "BMW"
                         },
                         new
                         {
                             Id = 3,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e6/Mercedes-Benz_logo_2.svg",
+                            ImageURL = "https://commons.wikimedia.org/wiki/File:Mercedes_Benz_Logo_11.jpg",
                             Name = "Mercedes-Benz"
                         },
                         new
                         {
                             Id = 4,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/44/Porsche_hood_emblem.png",
+                            ImageURL = "https://commons.wikimedia.org/wiki/File:Porsche_hood_emblem.png",
                             Name = "Porsche"
                         });
                 });
@@ -78,7 +80,7 @@ namespace CarEnthusiasts.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("ImageURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
