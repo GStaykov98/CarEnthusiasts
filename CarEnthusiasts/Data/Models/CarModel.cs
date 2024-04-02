@@ -22,9 +22,26 @@ namespace CarEnthusiasts.Data.Models
         public string ImageUrl { get; set; } = string.Empty;
 
         [Required]
+        public string DriveWheel { get; set; } = string.Empty;
+
+        [Required]
+        public int Weigth {  get; set; }
+
+        [Required]
+        public int Length { get; set; }
+
+        [Required]
+        public int Width { get; set; }
+
+        [Required]
+        public int Height { get; set; }
+
+        [Required]
         public int BrandId { get; set; }
 
         [ForeignKey(nameof(BrandId))]
         public CarBrand Brand { get; set; } = null!;
+
+        public virtual ICollection<CarEngine> Engines { get; set; } = new List<CarEngine>();
     }
 }

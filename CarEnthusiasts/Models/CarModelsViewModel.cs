@@ -1,6 +1,4 @@
-﻿using CarEnthusiasts.Data;
-using CarEnthusiasts.Data.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using CarEnthusiasts.Data.Models;
 
 namespace CarEnthusiasts.Models
 {

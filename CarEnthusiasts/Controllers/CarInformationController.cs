@@ -30,7 +30,7 @@ namespace CarEnthusiasts.Controllers
 
         public async Task<IActionResult> AllModels(int id)
         {
-            if (!data.CarBrands.Any(x => x.Id == id))
+            if (CheckIfCarExists(id))
             {
                 return BadRequest();
             }
@@ -49,6 +49,43 @@ namespace CarEnthusiasts.Controllers
                 .ToListAsync();
 
             return View(models);
+        }
+
+        public async Task<IActionResult> ShowCarInformation(int brandId, int modelId)
+        {
+            if (CheckIfCarExists(brandId, modelId))
+            {
+                return BadRequest();
+            }
+
+
+
+            return View();
+        }
+
+        private bool CheckIfCarExists(int brandId)
+        {
+            if (data.CarBrands.Any(x => x.Id == brandId))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CheckIfCarExists(int brandId, int modelId)
+        {
+            if (data.CarBrands.Any(x => x.Id == brandId))
+            {
+                var currentCar = data.CarBrands.FirstOrDefault(x => x.Id == brandId);
+
+                if (currentCar != null && currentCar.Models.Any(x => x.Id == modelId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
