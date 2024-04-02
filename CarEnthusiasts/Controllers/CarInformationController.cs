@@ -30,7 +30,7 @@ namespace CarEnthusiasts.Controllers
 
         public async Task<IActionResult> AllModels(int id)
         {
-            if (CheckIfCarExists(id))
+            if (!CheckIfCarExists(id))
             {
                 return BadRequest();
             }
@@ -53,14 +53,43 @@ namespace CarEnthusiasts.Controllers
 
         public async Task<IActionResult> ShowCarInformation(int brandId, int modelId)
         {
-            if (CheckIfCarExists(brandId, modelId))
+            if (!CheckIfCarExists(brandId, modelId))
             {
                 return BadRequest();
             }
 
+            var currentCar = await data.CarModels
+                .Where(x => x.Id == modelId)
+                .AsNoTracking()
+                .Select(x => new CarFullInformationViewModel
+                {
+                    Id = x.Id,
+                    Brand = x.Brand.Name,
+                    Model = x.Name,
+                    ImageUrl = x.ImageUrl,
+                    ProductionStartYear = x.ProductionStartYear,
+                    ProductionEndYear = x.ProductionEndYear,
+                    DriveWheel = x.DriveWheel,
+                    Length = x.Length,
+                    Height = x.Height,
+                    Weigth = x.Weigth,
+                    Width = x.Width,
+                    Engines = x.Engines.Select(e => new CarEnginesViewModel
+                    {
+                        Id = e.Id,
+                        Acceleration = e.Acceleration,
+                        TopSpeed = e.TopSpeed,
+                        Aspiration = e.Aspiration,
+                        Displacement = e.Displacement,
+                        Gearbox = e.Gearbox,
+                        HorsePower = e.HorsePower,
+                        Torque = e.Torque,
+                        Type = e.Type
+                    }).ToList()
 
+                }).FirstAsync();
 
-            return View();
+            return View(currentCar);
         }
 
         private bool CheckIfCarExists(int brandId)
@@ -77,7 +106,7 @@ namespace CarEnthusiasts.Controllers
         {
             if (data.CarBrands.Any(x => x.Id == brandId))
             {
-                var currentCar = data.CarBrands.FirstOrDefault(x => x.Id == brandId);
+                var currentCar = data.CarBrands.Include(m => m.Models).FirstOrDefault(c => c.Id == brandId);
 
                 if (currentCar != null && currentCar.Models.Any(x => x.Id == modelId))
                 {
