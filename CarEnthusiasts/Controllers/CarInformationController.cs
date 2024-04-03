@@ -39,13 +39,15 @@ namespace CarEnthusiasts.Controllers
                 .AsNoTracking()
                 .Where(i => i.BrandId == id)
                 .OrderBy(x => x.Name)
-                .Select(x => new CarModelsViewModel(
-                    x.Id,
-                    x.Name,
-                    x.ProductionStartYear,
-                    x.ProductionEndYear,
-                    x.ImageUrl,
-                    x.Brand))
+                .Select(x => new CarModelsViewModel 
+                {
+                    Id = id,
+                    Brand = x.Brand,
+                    Name = x.Name,
+                    ImageUrl = x.ImageUrl,
+                    ProductionStartYear = x.ProductionStartYear,
+                    ProductionEndYear = x.ProductionEndYear
+                })
                 .ToListAsync();
 
             return View(models);

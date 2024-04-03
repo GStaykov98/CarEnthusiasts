@@ -1,0 +1,29 @@
+﻿@model ComparisonViewModel
+
+@using (Html.BeginForm("ShowComparison", "Compare", FormMethod.Post))
+{
+    {
+        var carSelectListItems = new List<SelectListItem>();
+
+        foreach (var car in Model.Cars)
+        {
+            foreach (var engine in car.Engines)
+            {
+                var fullNameWithEngine = $"{car.FullName} - {engine.Name}";
+                carSelectListItems.Add(new SelectListItem
+                            {
+                                Value = $"{car.Id}:{engine.Id}",
+                                Text = fullNameWithEngine
+                            });
+            }
+        }
+
+        @Html.DropDownListFor(m => m.SelectedCar1Id, carSelectListItems, "Select Car 1", new { @class = "form-control" })
+
+        @Html.DropDownListFor(m => m.SelectedCar2Id, carSelectListItems, "Select Car 2", new { @class = "form-control" })
+    }
+
+
+
+	<button type="submit" class="btn btn-primary">Compare</button>
+}

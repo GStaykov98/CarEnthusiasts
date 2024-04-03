@@ -1,0 +1,52 @@
+﻿@model ComparisonViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card" style="width: 18rem;">
+            <img src="@Model.FirstCarFullInformation.ImageUrl" class="card-img-top" alt="Car picture">
+            <div class="card-body">
+                <h5 class="card-title">@Model.FirstCarFullInformation.Brand - @Model.FirstCarFullInformation.Model</h5>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">Horse Power: @Model.FirstCarFullInformation.Engine.HorsePower</li>
+                <li class="list-group-item">Torque: @Model.FirstCarFullInformation.Engine.Torque</li>
+                <li class="list-group-item">Displacement: @Model.FirstCarFullInformation.Engine.Displacement</li>
+                <li class="list-group-item">Aspiration: @Model.FirstCarFullInformation.Engine.Aspiration</li>
+                <li class="list-group-item">Type: @Model.FirstCarFullInformation.Engine.Type</li>
+                <li class="list-group-item">Acceleration 0-100: @Model.FirstCarFullInformation.Engine.Acceleration sec</li>
+                <li class="list-group-item">Top Speed: @Model.FirstCarFullInformation.Engine.TopSpeed km/h</li>
+                <li class="list-group-item">Gearbox: @Model.FirstCarFullInformation.Engine.Gearbox</li>
+                <li class="list-group-item">Weigth: @Model.FirstCarFullInformation.Weigth kg</li>
+                <li class="list-group-item">Length: @Model.FirstCarFullInformation.Length mm</li>
+                <li class="list-group-item">Width: @Model.FirstCarFullInformation.Width mm</li>
+                <li class="list-group-item">Heigth: @Model.FirstCarFullInformation.Height mm</li>
+                <li class="list-group-item">Drive Wheel: @Model.FirstCarFullInformation.DriveWheel</li>
+                <li class="list-group-item">Production: @Model.FirstCarFullInformation.ProductionStartYear - @Model.FirstCarFullInformation.ProductionEndYear</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card" style="width: 18rem;">
+            <img src="@Model.SecondCarFullInformation.ImageUrl" class="card-img-top" alt="Car picture">
+            <div class="card-body">
+                <h5 class="card-title">@Model.SecondCarFullInformation.Brand - @Model.SecondCarFullInformation.Model</h5>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">Horse Power: @Model.SecondCarFullInformation.Engine.HorsePower</li>
+                <li class="list-group-item">Torque: @Model.SecondCarFullInformation.Engine.Torque</li>
+                <li class="list-group-item">Displacement: @Model.SecondCarFullInformation.Engine.Displacement</li>
+                <li class="list-group-item">Aspiration: @Model.SecondCarFullInformation.Engine.Aspiration</li>
+                <li class="list-group-item">Type: @Model.SecondCarFullInformation.Engine.Type</li>
+                <li class="list-group-item">Acceleration 0-100: @Model.SecondCarFullInformation.Engine.Acceleration sec</li>
+                <li class="list-group-item">Top Speed: @Model.SecondCarFullInformation.Engine.TopSpeed km/h</li>
+                <li class="list-group-item">Gearbox: @Model.SecondCarFullInformation.Engine.Gearbox</li>
+                <li class="list-group-item">Weigth: @Model.SecondCarFullInformation.Weigth kg</li>
+                <li class="list-group-item">Length: @Model.SecondCarFullInformation.Length mm</li>
+                <li class="list-group-item">Width: @Model.SecondCarFullInformation.Width mm</li>
+                <li class="list-group-item">Heigth: @Model.SecondCarFullInformation.Height mm</li>
+                <li class="list-group-item">Drive Wheel: @Model.SecondCarFullInformation.DriveWheel</li>
+                <li class="list-group-item">Production: @Model.SecondCarFullInformation.ProductionStartYear - @Model.SecondCarFullInformation.ProductionEndYear</li>
+            </ul>
+        </div>
+    </div>
+</div>
