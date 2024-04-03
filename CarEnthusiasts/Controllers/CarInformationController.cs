@@ -77,6 +77,7 @@ namespace CarEnthusiasts.Controllers
                     Engines = x.Engines.Select(e => new CarEnginesViewModel
                     {
                         Id = e.Id,
+                        Name = e.Name,
                         Acceleration = e.Acceleration,
                         TopSpeed = e.TopSpeed,
                         Aspiration = e.Aspiration,

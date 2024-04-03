@@ -9,6 +9,9 @@ namespace CarEnthusiasts.Data.Models
         public int Id { get; set; }
 
         [Required]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
         public int HorsePower { get; set; }
 
         [Required]

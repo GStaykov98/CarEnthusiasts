@@ -161,6 +161,7 @@ namespace CarEnthusiasts.Data
                 .HasData(new CarEngine()
                 {
                     Id = 1,
+                    Name = "M5",
                     HorsePower = 400,
                     Torque = 500,
                     Displacement = 4941,
@@ -174,6 +175,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 2,
+                    Name = "530D",
                     HorsePower = 193,
                     Torque = 410,
                     Displacement = 2926,
@@ -187,6 +189,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 3,
+                    Name = "M550i",
                     HorsePower = 530,
                     Torque = 750,
                     Displacement = 4395,
@@ -200,6 +203,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 4,
+                    Name = "520i",
                     HorsePower = 184,
                     Torque = 290,
                     Displacement = 1998,
@@ -213,6 +217,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 5,
+                    Name = "2.0 TFSI Ultra",
                     HorsePower = 190,
                     Torque = 320,
                     Displacement = 1984,
@@ -226,6 +231,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 6,
+                    Name = "3.0 TDI",
                     HorsePower = 272,
                     Torque = 600,
                     Displacement = 2967,
@@ -239,6 +245,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 7,
+                    Name = "3.0 TDI",
                     HorsePower = 204,
                     Torque = 280,
                     Displacement = 2773,
@@ -252,6 +259,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 8,
+                    Name = "3.0 TFSI",
                     HorsePower = 310,
                     Torque = 440,
                     Displacement = 2995,
@@ -265,6 +273,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 9,
+                    Name = "E 350",
                     HorsePower = 272,
                     Torque = 350,
                     Displacement = 3498,
@@ -278,6 +287,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 10,
+                    Name = "AMG E 63 V8 BiTurbo",
                     HorsePower = 525,
                     Torque = 700,
                     Displacement = 5461,
@@ -291,6 +301,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 11,
+                    Name = "S 350d",
                     HorsePower = 258,
                     Torque = 620,
                     Displacement = 2987,
@@ -304,6 +315,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 12,
+                    Name = "AMG S 63 V8 BiTurbo",
                     HorsePower = 525,
                     Torque = 700,
                     Displacement = 5461,
@@ -317,6 +329,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 13,
+                    Name = "GT3 RS 4.0",
                     HorsePower = 520,
                     Torque = 470,
                     Displacement = 3996,
@@ -330,6 +343,7 @@ namespace CarEnthusiasts.Data
                 new CarEngine()
                 {
                     Id = 14,
+                    Name = "Turbo S 93.4 kWh",
                     HorsePower = 761,
                     Torque = 1050,
                     Displacement = 800,

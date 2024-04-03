@@ -5,7 +5,6 @@
   <img src="@Model.ImageUrl" class="card-img-top" alt="Car picture">
   <div class="card-body">
     <h5 class="card-title">@Model.Brand - @Model.Model</h5>
-    <a href="#" class="btn btn-primary">Compare</a>
   </div>
 </div>
 
@@ -15,15 +14,15 @@
      <div class="col-sm-6 mb-3 mb-sm-0">
       <div class="card">
           <div class="card-body">
-           <h5 class="card-title">First engine</h5>
+               <h5 class="card-title">@engine.Name <a href="#" class="btn btn-primary">Compare</a></h5>
                <ul class="list-group">
                    <li class="list-group-item">Horse Power: @engine.HorsePower</li>
                    <li class="list-group-item">Torque: @engine.Torque</li>
                    <li class="list-group-item">Displacement: @engine.Displacement</li>
                    <li class="list-group-item">Aspiration: @engine.Aspiration</li>
                    <li class="list-group-item">Type: @engine.Type</li>
-                   <li class="list-group-item">Acceleration 0-100: @engine.Acceleration</li>
-                   <li class="list-group-item">Top Speed: @engine.TopSpeed</li>
+                   <li class="list-group-item">Acceleration 0-100: @engine.Acceleration seconds</li>
+                   <li class="list-group-item">Top Speed: @engine.TopSpeed km/h</li>
                    <li class="list-group-item">Gearbox: @engine.Gearbox</li>
             </ul>
         </div>
@@ -35,10 +34,10 @@
 <ul class="list-group">
   <li class="list-group-item">Production: @Model.ProductionStartYear - @Model.ProductionEndYear</li>
   <li class="list-group-item">Drive Wheel: @Model.DriveWheel</li>
-  <li class="list-group-item">Weigth: @Model.Weigth</li>
-  <li class="list-group-item">Length: @Model.Length</li>
-  <li class="list-group-item">Width: @Model.Width</li>
-  <li class="list-group-item">Heigth: @Model.Height</li>
+  <li class="list-group-item">Weigth: @Model.Weigth kg</li>
+  <li class="list-group-item">Length: @Model.Length mm</li>
+  <li class="list-group-item">Width: @Model.Width mm</li>
+  <li class="list-group-item">Heigth: @Model.Height mm</li>
 </ul>
 @section Scripts {
                 <partial name="_ValidationScriptsPartial" />
