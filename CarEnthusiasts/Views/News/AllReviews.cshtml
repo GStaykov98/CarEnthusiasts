@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ReviewViewModel>
+
+@foreach (var review in Model)
+{
+                <a asp-controller="CarInformation" asp-action="AllCars">
+                    <div class="card" style="width: 18rem;">
+                      <img src="@review.ImageUrl" class="card-img-top" alt="Review image">
+                  <div class="card-body">
+                        <h5 class="card-title">@review.Title</h5>
+                  </div>
+                </div>
+                </a>
+}
+
+<a asp-asp-controller="CarInformation" asp-action="AllModels">
+    <button type="button" class="btn btn-outline-primary">More news</button>
+</a>

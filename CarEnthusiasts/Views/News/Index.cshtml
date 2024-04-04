@@ -1,7 +1,39 @@
-﻿@{
-    ViewData["Title"] = "News Page";
-}
+﻿@model NewsAndReviewsViewModel
 
-<div class="text-center">
-    <h1 class="display-4">This is the news page.</h1>
+<div class="row">
+    <div class="col-md-6">
+        @for (int i = 0; i < 2; i++)
+        {
+        <a asp-controller="CarInformation" asp-action="AllCars">
+            <div class="card" style="width: 18rem;">
+          <img src="@Model.News[i].ImageUrl" class="card-img-top" alt="News image">
+          <div class="card-body">
+            <h5 class="card-title">@Model.News[i].Title</h5>
+          </div>
+        </div>
+        </a>
+        }
+
+<a asp-action="AllNews">
+    <button type="button" class="btn btn-outline-primary">More news</button>
+</a>
+
+    </div>
+    <div class="col-md-6">
+        @for (int i = 0; i < 2; i++)
+        {
+        <a asp-controller="CarInformation" asp-action="AllCars">
+                <div class="card" style="width: 18rem;">
+                  <img src="@Model.Reviews[i].ImageUrl" class="card-img-top" alt="News image">
+              <div class="card-body">
+                    <h5 class="card-title">@Model.Reviews[i].Title</h5>
+              </div>
+            </div>
+            </a>
+        }
+
+<a asp-action="AllReviews">
+    <button type="button" class="btn btn-outline-primary">More reviews</button>
+</a>
+    </div>
 </div>
