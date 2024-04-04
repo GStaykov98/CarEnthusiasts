@@ -44,6 +44,32 @@ namespace CarEnthusiasts.Controllers
             return View(reviews);
         }
 
+        public async Task<IActionResult> NewsInformation(int id)
+        {
+             var news = await data.News
+                .Select(x => new NewsInformationViewModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    ImageUrl = x.ImageUrl,
+                    Description = x.Description,
+                    ViewsCounter = x.ViewsCounter,
+                    CreatedOn = x.CreatedOn,
+                    Comments = x.Comments
+                })
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (news == null)
+            {
+                return BadRequest();
+            }
+
+            news.ViewsCounter++;
+            await data.SaveChangesAsync();
+
+            return View(news);
+        }
+
         private List<NewsViewModel> GetNews()
         {
             var news = data.News

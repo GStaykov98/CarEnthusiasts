@@ -2,7 +2,7 @@
 
 @foreach (var news in Model)
 {
-            <a asp-controller="CarInformation" asp-action="AllCars">
+           <a asp-controller="News" asp-action="NewsInformation" asp-route-id="@news.Id">
                 <div class="card" style="width: 18rem;">
               <img src="@news.ImageUrl" class="card-img-top" alt="News image">
               <div class="card-body">
@@ -11,7 +11,3 @@
             </div>
             </a>
 }
-
-<a asp-asp-controller="CarInformation" asp-action="AllModels">
-    <button type="button" class="btn btn-outline-primary">More news</button>
-</a>

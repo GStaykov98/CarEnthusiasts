@@ -1,0 +1,38 @@
+﻿@model NewsInformationViewModel
+
+<div class="card" style="width: 50rem;">
+  <img src="@Model.ImageUrl" class="card-img-top" alt="Image">
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-header">
+    @Model.Title
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">@Model.ViewsCounter</h5>
+    <p class="card-text">@Model.CreatedOn</p>
+    <p class="card-text">@Model.Description</p>
+  </div>
+</div>
+
+
+@if (!Model.Comments.Any())
+{
+    <p>No comments yet!</p>
+}
+else
+{
+    @foreach (var comment in Model.Comments)
+    {
+                <ol class="list-group list-group-numbered">
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">@comment.User.UserName - @comment.CreatedDate</div>
+                    @comment.Text
+                </div>
+                <span class="badge text-bg-primary rounded-pill">14</span>
+              </li>
+            </ol>
+    }
+}
