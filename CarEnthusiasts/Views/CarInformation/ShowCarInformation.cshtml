@@ -5,6 +5,9 @@
   <img src="@Model.ImageUrl" class="card-img-top" alt="Car picture">
   <div class="card-body">
     <h5 class="card-title">@Model.Brand - @Model.Model</h5>
+                       <form class="input-group-sm" asp-controller="Compare" asp-action="CompareCars" method="get">
+                          <input type="submit" value="Compare Cars" class="btn btn-primary" />
+                 </form>
   </div>
 </div>
 
@@ -14,7 +17,6 @@
      <div class="col-sm-6 mb-3 mb-sm-0">
       <div class="card">
           <div class="card-body">
-               <h5 class="card-title">@engine.Name <a href="#" class="btn btn-primary">Compare</a></h5>
                <ul class="list-group">
                    <li class="list-group-item">Horse Power: @engine.HorsePower</li>
                    <li class="list-group-item">Torque: @engine.Torque</li>

@@ -58,6 +58,14 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
+            if (!data.CarModels.Any(x => x.Id == firstSelectedCarId) ||
+                !data.CarModels.Any(x => x.Id == secondSelectedCarId) ||
+                !data.CarModels.Any(e => e.Engines.Any(i => i.Id == firstSelectedCarEngineId)) ||
+                !data.CarModels.Any(x => x.Engines.Any(e => e.Id == secondSelectedCarEngineId)))
+            {
+                return BadRequest();
+            }
+
             model.FirstCarFullInformation = await data.CarModels
                 .Include(e => e.Engines)
                 .Where(x => x.Id == firstSelectedCarId)

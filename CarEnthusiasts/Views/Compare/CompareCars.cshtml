@@ -10,6 +10,7 @@
             foreach (var engine in car.Engines)
             {
                 var fullNameWithEngine = $"{car.FullName} - {engine.Name}";
+
                 carSelectListItems.Add(new SelectListItem
                             {
                                 Value = $"{car.Id}:{engine.Id}",

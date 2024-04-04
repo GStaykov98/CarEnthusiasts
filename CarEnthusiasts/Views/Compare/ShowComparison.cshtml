@@ -5,7 +5,7 @@
         <div class="card" style="width: 18rem;">
             <img src="@Model.FirstCarFullInformation.ImageUrl" class="card-img-top" alt="Car picture">
             <div class="card-body">
-                <h5 class="card-title">@Model.FirstCarFullInformation.Brand - @Model.FirstCarFullInformation.Model</h5>
+                <h5 class="card-title">@Model.FirstCarFullInformation.Brand - @Model.FirstCarFullInformation.Model @Model.FirstCarFullInformation.Engine.Name</h5>
             </div>
             <ul class="list-group">
                 <li class="list-group-item">Horse Power: @Model.FirstCarFullInformation.Engine.HorsePower</li>
@@ -29,7 +29,7 @@
         <div class="card" style="width: 18rem;">
             <img src="@Model.SecondCarFullInformation.ImageUrl" class="card-img-top" alt="Car picture">
             <div class="card-body">
-                <h5 class="card-title">@Model.SecondCarFullInformation.Brand - @Model.SecondCarFullInformation.Model</h5>
+                <h5 class="card-title">@Model.SecondCarFullInformation.Brand - @Model.SecondCarFullInformation.Model @Model.SecondCarFullInformation.Engine.Name</h5>
             </div>
             <ul class="list-group">
                 <li class="list-group-item">Horse Power: @Model.SecondCarFullInformation.Engine.HorsePower</li>
