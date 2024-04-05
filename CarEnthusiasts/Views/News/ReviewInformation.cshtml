@@ -1,0 +1,49 @@
+﻿@using System.Security.Claims
+@model ReviewInformationViewModel
+
+<div class="card" style="width: 50rem;">
+  <img src="@Model.ImageUrl" class="card-img-top" alt="Image">
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-header">
+        @Model.Title
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">@Model.ViewsCounter</h5>
+    <p class="card-text">@Model.CreatedOn</p>
+    <p class="card-text">@Model.Description</p>
+  </div>
+</div>
+
+
+@if (!Model.Comments.Any())
+{
+        <p>No comments yet!</p>
+}
+else
+{
+    @foreach (var comment in Model.Comments)
+    {
+                <div class="card">
+                  <div class="card-header">
+                @comment.User?.UserName - @comment.CreatedDate
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">@comment.Text</p>
+                  </div>
+                </div>
+    }
+}
+
+@if (User.Identity != null && User.Identity.IsAuthenticated == true)
+{
+                <form asp-controller="News" asp-action="PostReviewComment" method="post" asp-route-reviewId="@Model.Id" asp-route-userId="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
+            <div class="form-group">
+                <label for="commentText">Write your comment:</label>
+                <textarea id="commentText" name="text" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Comment</button>
+        </form>
+}

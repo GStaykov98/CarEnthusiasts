@@ -116,7 +116,7 @@ namespace CarEnthusiasts.Controllers
             var reviews = await data.Reviews
                .Include(c => c.Comments)
                .ThenInclude(u => u.User)
-               .Select(x => new NewsInformationViewModel
+               .Select(x => new ReviewInformationViewModel
                {
                    Id = x.Id,
                    Title = x.Title,
@@ -134,10 +134,42 @@ namespace CarEnthusiasts.Controllers
 
             }
 
-            data.Reviews.Find(id).ViewsCounter++;
+            var currentReview = await data.Reviews.FindAsync(id);
+
+            if (currentReview != null)
+            {
+
+                currentReview.ViewsCounter++;
+            }
+
             await data.SaveChangesAsync();
 
             return View(reviews);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostReviewComment(string text, int reviewId, string userId)
+        {
+            if (!ModelState.IsValid ||
+                text is null ||
+                !data.Reviews.Any(x => x.Id == reviewId) ||
+                User.FindFirstValue(ClaimTypes.NameIdentifier) != userId)
+            {
+                return BadRequest();
+            }
+
+            var comment = new Comment
+            {
+                ReviewId = reviewId,
+                UserId = userId,
+                CreatedDate = DateTime.Now,
+                Text = text
+            };
+
+            await data.Comments.AddAsync(comment);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(ReviewInformation), new { id = reviewId });
         }
 
         private List<NewsViewModel> GetNews()

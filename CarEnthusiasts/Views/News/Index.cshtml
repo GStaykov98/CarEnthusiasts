@@ -22,7 +22,7 @@
     <div class="col-md-6">
         @for (int i = 0; i < 2; i++)
         {
-        <a asp-controller="CarInformation" asp-action="AllCars">
+        <a asp-controller="News" asp-action="ReviewInformation" asp-route-id="@Model.Reviews[i].Id">
                 <div class="card" style="width: 18rem;">
                   <img src="@Model.Reviews[i].ImageUrl" class="card-img-top" alt="News image">
               <div class="card-body">
