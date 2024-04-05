@@ -48,6 +48,11 @@ namespace CarEnthusiasts.Controllers
 
         public async Task<IActionResult> NewsInformation(int id)
         {
+            if (id < 0)
+            {
+                return BadRequest();
+            }
+
              var news = await data.News
                 .Include(c => c.Comments)
                 .ThenInclude(u => u.User)
@@ -68,14 +73,21 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            data.News.Find(id).ViewsCounter++;
+            var currentNews = await data.News.FindAsync(id);
+
+            if (currentNews != null)
+            {
+
+                currentNews.ViewsCounter++;
+            }
+
             await data.SaveChangesAsync();
 
             return View(news);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostComment(string text, int newsId, string userId)
+        public async Task<IActionResult> PostNewsComment(string text, int newsId, string userId)
         {
             if (!ModelState.IsValid ||
                 text is null ||
@@ -97,6 +109,35 @@ namespace CarEnthusiasts.Controllers
             await data.SaveChangesAsync();
 
             return RedirectToAction(nameof(NewsInformation), new { id = newsId});
+        }
+
+        public async Task<IActionResult> ReviewInformation(int id)
+        {
+            var reviews = await data.Reviews
+               .Include(c => c.Comments)
+               .ThenInclude(u => u.User)
+               .Select(x => new NewsInformationViewModel
+               {
+                   Id = x.Id,
+                   Title = x.Title,
+                   ImageUrl = x.ImageUrl,
+                   Description = x.Description,
+                   ViewsCounter = x.ViewsCounter,
+                   CreatedOn = x.CreatedOn,
+                   Comments = x.Comments
+               })
+               .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (reviews == null)
+            {
+                return BadRequest();
+
+            }
+
+            data.Reviews.Find(id).ViewsCounter++;
+            await data.SaveChangesAsync();
+
+            return View(reviews);
         }
 
         private List<NewsViewModel> GetNews()

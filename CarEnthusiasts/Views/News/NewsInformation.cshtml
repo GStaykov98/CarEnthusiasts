@@ -39,7 +39,7 @@ else
 
 @if (User.Identity != null && User.Identity.IsAuthenticated == true)
 {
-            <form asp-controller="News" asp-action="PostComment" method="post" asp-route-newsId="@Model.Id" asp-route-userId="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
+            <form asp-controller="News" asp-action="PostNewsComment" method="post" asp-route-newsId="@Model.Id" asp-route-userId="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
         <div class="form-group">
             <label for="commentText">Write your comment:</label>
             <textarea id="commentText" name="text" class="form-control"></textarea>
