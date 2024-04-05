@@ -19,7 +19,7 @@ namespace CarEnthusiasts.Data.Models
         public string UserId { get; set; } = string.Empty;
 
         [ForeignKey(nameof(UserId))]
-        public IdentityUser User { get; set; } = new IdentityUser();
+        public IdentityUser User { get; set; }
 
 
         public int? NewsId { get; set; }

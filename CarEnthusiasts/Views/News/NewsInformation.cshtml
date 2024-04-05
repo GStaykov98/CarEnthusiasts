@@ -28,7 +28,7 @@ else
     {
         <div class="card">
           <div class="card-header">
-            @comment.User.Email - @comment.CreatedDate
+            @comment.User?.UserName - @comment.CreatedDate
           </div>
           <div class="card-body">
             <p class="card-text">@comment.Text</p>
@@ -39,10 +39,10 @@ else
 
 @if (User.Identity != null && User.Identity.IsAuthenticated == true)
 {
-            <form asp-controller="News" asp-action="PostComment" method="post" asp-route-newsId="@Model.Id" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">
+            <form asp-controller="News" asp-action="PostComment" method="post" asp-route-newsId="@Model.Id" asp-route-userId="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
         <div class="form-group">
             <label for="commentText">Write your comment:</label>
-            <textarea id="commentText" name="text" class="form-control" rows="3"></textarea>
+            <textarea id="commentText" name="text" class="form-control"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Comment</button>
     </form>

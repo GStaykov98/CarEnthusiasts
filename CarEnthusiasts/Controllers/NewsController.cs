@@ -49,6 +49,8 @@ namespace CarEnthusiasts.Controllers
         public async Task<IActionResult> NewsInformation(int id)
         {
              var news = await data.News
+                .Include(c => c.Comments)
+                .ThenInclude(u => u.User)
                 .Select(x => new NewsInformationViewModel
                 {
                     Id = x.Id,
@@ -78,7 +80,7 @@ namespace CarEnthusiasts.Controllers
             if (!ModelState.IsValid ||
                 text is null ||
                 !data.News.Any(x => x.Id == newsId) ||
-                User.FindFirst(ClaimTypes.NameIdentifier)?.Value != userId)
+                User.FindFirstValue(ClaimTypes.NameIdentifier) != userId)
             {
                 return BadRequest();
             }
@@ -91,7 +93,7 @@ namespace CarEnthusiasts.Controllers
                 Text = text
             };
 
-            data.Comments.Add(comment);
+            await data.Comments.AddAsync(comment);
             await data.SaveChangesAsync();
 
             return RedirectToAction(nameof(NewsInformation), new { id = newsId});
