@@ -1,8 +1,10 @@
 ﻿using CarEnthusiasts.Data;
+using CarEnthusiasts.Data.Models;
 using CarEnthusiasts.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace CarEnthusiasts.Controllers
 {
@@ -64,10 +66,35 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            news.ViewsCounter++;
+            data.News.Find(id).ViewsCounter++;
             await data.SaveChangesAsync();
 
             return View(news);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostComment(string text, int newsId, string userId)
+        {
+            if (!ModelState.IsValid ||
+                text is null ||
+                !data.News.Any(x => x.Id == newsId) ||
+                User.FindFirst(ClaimTypes.NameIdentifier)?.Value != userId)
+            {
+                return BadRequest();
+            }
+
+            var comment = new Comment
+            {
+                NewsId = newsId,
+                UserId = userId,
+                CreatedDate = DateTime.Now,
+                Text = text
+            };
+
+            data.Comments.Add(comment);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(NewsInformation), new { id = newsId});
         }
 
         private List<NewsViewModel> GetNews()

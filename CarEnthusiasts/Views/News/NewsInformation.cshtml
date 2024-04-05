@@ -1,4 +1,5 @@
-﻿@model NewsInformationViewModel
+﻿@using System.Security.Claims
+@model NewsInformationViewModel
 
 <div class="card" style="width: 50rem;">
   <img src="@Model.ImageUrl" class="card-img-top" alt="Image">
@@ -25,14 +26,24 @@ else
 {
     @foreach (var comment in Model.Comments)
     {
-                <ol class="list-group list-group-numbered">
-              <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">@comment.User.UserName - @comment.CreatedDate</div>
-                    @comment.Text
-                </div>
-                <span class="badge text-bg-primary rounded-pill">14</span>
-              </li>
-            </ol>
+        <div class="card">
+          <div class="card-header">
+            @comment.User.Email - @comment.CreatedDate
+          </div>
+          <div class="card-body">
+            <p class="card-text">@comment.Text</p>
+          </div>
+        </div>
     }
+}
+
+@if (User.Identity != null && User.Identity.IsAuthenticated == true)
+{
+            <form asp-controller="News" asp-action="PostComment" method="post" asp-route-newsId="@Model.Id" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value">
+        <div class="form-group">
+            <label for="commentText">Write your comment:</label>
+            <textarea id="commentText" name="text" class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Comment</button>
+    </form>
 }

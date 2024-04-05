@@ -17,6 +17,8 @@ namespace CarEnthusiasts.Models
 
         public DateTime CreatedOn { get; set; }
 
+        public string NewComment { get; set; } = string.Empty;
+
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
