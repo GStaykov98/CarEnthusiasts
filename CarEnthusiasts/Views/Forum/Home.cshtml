@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ForumTopicViewModel>
+
+@foreach (var type in ViewBag.ForumTypes)
+{
+    <h2>@type</h2>
+
+	@foreach (var topic in Model.Where(x => x.TopicType == type))
+	{
+        <div class="card text-center">
+          <div class="card-header">
+            @topic.Creator
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">@topic.Title</h5>
+          </div>
+          <div class="card-footer text-body-secondary">
+            @topic.CreatedOn
+          </div>
+        </div>
+	}
+}

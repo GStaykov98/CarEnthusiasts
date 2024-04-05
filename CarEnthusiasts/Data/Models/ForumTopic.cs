@@ -23,6 +23,9 @@ namespace CarEnthusiasts.Data.Models
 
         public int FollowerCounter { get; set; } = 0;
 
+        [Required]
+        public DateTime CreatedOn { get; set; }
+
         [ForeignKey(nameof(CreatorId))]
         public IdentityUser Creator { get; set; } = null!;
 

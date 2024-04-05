@@ -421,5 +421,7 @@ namespace CarEnthusiasts.Data
         public DbSet<News> News { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<ForumTopic> ForumTopics { get; set; }
+        public DbSet<ForumTopicFollower> ForumTopicsFollowers { get; set; }
     }
 }
