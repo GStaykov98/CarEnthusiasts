@@ -13,6 +13,10 @@ namespace CarEnthusiasts.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.
+                Entity<ForumTopicFollower>()
+                .HasKey(pk => new { pk.FollowerId, pk.ForumTopicId });
+
             modelBuilder
                 .Entity<CarBrand>()
                 .HasData(new CarBrand()

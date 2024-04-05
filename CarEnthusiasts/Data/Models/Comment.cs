@@ -19,7 +19,7 @@ namespace CarEnthusiasts.Data.Models
         public string UserId { get; set; } = string.Empty;
 
         [ForeignKey(nameof(UserId))]
-        public IdentityUser User { get; set; }
+        public IdentityUser User { get; set; } = null!;
 
 
         public int? NewsId { get; set; }
@@ -36,10 +36,10 @@ namespace CarEnthusiasts.Data.Models
         public Review? Review { get; set; }
 
 
-        public int? ForumId { get; set; }
+        public int? ForumTopicId { get; set; }
 
 
-        //[ForeignKey(nameof(ForumId))]
-        //public f Forum { get; set; } = new News();
+        [ForeignKey(nameof(ForumTopicId))]
+        public ForumTopic? ForumTopic { get; set; }
     }
 }
