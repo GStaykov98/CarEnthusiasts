@@ -19,15 +19,15 @@ namespace CarEnthusiasts.Data.Models
         [Required]
         public string CreatorId { get; set; } = string.Empty;
 
+        [ForeignKey(nameof(CreatorId))]
+        public IdentityUser Creator { get; set; } = null!;
+
         public int LikeCounter { get; set; } = 0;
 
         public int FollowerCounter { get; set; } = 0;
 
         [Required]
         public DateTime CreatedOn { get; set; }
-
-        [ForeignKey(nameof(CreatorId))]
-        public IdentityUser Creator { get; set; } = null!;
 
         [Required]
         public ForumTopicType TopicType { get; set; }
