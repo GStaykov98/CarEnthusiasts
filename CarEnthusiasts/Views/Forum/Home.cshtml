@@ -2,7 +2,7 @@
 
 @foreach (var type in ViewBag.ForumTypes)
 {
-    <h2>@type</h2>
+    <h2 style="text-align: center">@type</h2>
 
 	@foreach (var topic in Model.Where(x => x.TopicType == type))
 	{
@@ -10,9 +10,11 @@
           <div class="card-header">
             @topic.Creator
           </div>
+          <a asp-controller="Forum" asp-action="TopicDetails" asp-route-id="@topic.Id">
           <div class="card-body">
             <h5 class="card-title">@topic.Title</h5>
           </div>
+          </a>
           <div class="card-footer text-body-secondary">
             @topic.CreatedOn
           </div>

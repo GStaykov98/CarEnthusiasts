@@ -1,0 +1,41 @@
+﻿@model ForumTopicDetailsViewModel
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
+      Author - @Model.Creator.UserName
+    </div>
+    <div class="col">
+      Date created - @Model.CreatedOn
+    </div>
+    <div class="col">
+      Likes: @Model.LikeCounter
+    </div>
+    <div class="col">
+        Followers: @Model.FollowerCounter
+    </div>
+  </div>
+</div>
+
+<p>@Model.Text</p>
+
+@if (!Model.Comments.Any())
+{
+        <p>No comments yet!</p>
+}
+else
+{
+    @foreach (var comment in Model.Comments)
+    {
+                <div class="card">
+                  <div class="card-header">
+                @comment.User?.UserName - @comment.CreatedDate
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">@comment.Text</p>
+                  </div>
+                </div>
+    }
+}
