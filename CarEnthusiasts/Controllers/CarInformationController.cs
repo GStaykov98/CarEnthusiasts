@@ -41,7 +41,7 @@ namespace CarEnthusiasts.Controllers
                 .OrderBy(x => x.Name)
                 .Select(x => new CarModelsViewModel 
                 {
-                    Id = id,
+                    Id = x.Id,
                     Brand = x.Brand,
                     Name = x.Name,
                     ImageUrl = x.ImageUrl,

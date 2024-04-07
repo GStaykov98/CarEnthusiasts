@@ -1,9 +1,11 @@
 ﻿using CarEnthusiasts.Data;
+using CarEnthusiasts.Data.Models;
 using CarEnthusiasts.Data.Models.Enums;
 using CarEnthusiasts.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
+using System.Security.Claims;
 
 namespace CarEnthusiasts.Controllers
 {
@@ -73,6 +75,31 @@ namespace CarEnthusiasts.Controllers
 
             return View(currentTopic);
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostComment(string text, int topicId, string userId)
+        {
+            if (!ModelState.IsValid ||
+                text is null ||
+                !data.ForumTopics.Any(x => x.Id == topicId) ||
+                User.FindFirstValue(ClaimTypes.NameIdentifier) != userId)
+            {
+                return BadRequest();
+            }
+
+            var comment = new Comment
+            {
+                ForumTopicId = topicId,
+                UserId = userId,
+                CreatedDate = DateTime.Now,
+                Text = text
+            };
+
+            await data.Comments.AddAsync(comment);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(TopicDetails), new { id = topicId });
         }
     }
 }

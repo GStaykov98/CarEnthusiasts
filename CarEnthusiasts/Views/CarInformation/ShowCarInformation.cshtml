@@ -11,12 +11,13 @@
   </div>
 </div>
 
-@foreach (var engine in Model.Engines)
+@foreach (var engine in Model.Engines.OrderBy(x => x.Name))
 {
     <div class="row">
      <div class="col-sm-6 mb-3 mb-sm-0">
       <div class="card">
           <div class="card-body">
+              <h2>@engine.Name</h2>
                <ul class="list-group">
                    <li class="list-group-item">Horse Power: @engine.HorsePower</li>
                    <li class="list-group-item">Torque: @engine.Torque</li>
