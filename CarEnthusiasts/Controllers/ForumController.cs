@@ -101,5 +101,56 @@ namespace CarEnthusiasts.Controllers
 
             return RedirectToAction(nameof(TopicDetails), new { id = topicId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditComment(int id)
+        {
+            var comment = await data.Comments.FindAsync(id);
+
+            if (comment is null)
+            {
+                return BadRequest();
+            }
+
+            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return BadRequest();
+            }
+
+            var editCommentForm = new EditCommentViewModel()
+            {
+                Id = comment.Id,
+                Text = comment.Text
+            };
+
+            return View(editCommentForm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditComment(EditCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var comment = await data.Comments.FindAsync(model.Id);
+
+            if (comment is null)
+            {
+                return BadRequest();
+            }
+
+            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return BadRequest();
+            }
+
+            comment.Text = model.Text;
+
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(TopicDetails), new { id = comment.ForumTopicId });
+        }
     }
 }

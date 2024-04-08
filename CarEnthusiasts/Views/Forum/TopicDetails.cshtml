@@ -38,6 +38,11 @@ else
                     <p class="card-text">@comment.Text</p>
                   </div>
                 </div>
+
+        if (comment.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+               <a asp-controller="Forum" asp-action="EditComment" asp-route-id="@comment.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
+        }
     }
 }
 
