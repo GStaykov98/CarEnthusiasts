@@ -152,5 +152,50 @@ namespace CarEnthusiasts.Controllers
 
             return RedirectToAction(nameof(TopicDetails), new { id = comment.ForumTopicId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = await data.Comments.FindAsync(id);
+
+            if (comment is null)
+            {
+                return BadRequest();
+            }
+
+            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return Unauthorized();
+            }
+
+            var commentModel = new DeleteCommentViewModel()
+            {
+                Id = comment.Id,
+                Text = comment.Text,
+                ForumTopicId = comment.ForumTopicId
+            };
+
+            return View(commentModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(DeleteCommentViewModel model)
+        {
+            var comment = await data.Comments.FindAsync(model.Id);
+
+            if (!ModelState.IsValid ||
+                comment is null ||
+                comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return BadRequest();
+            }
+
+            model.ForumTopicId = comment.ForumTopicId;
+
+            data.Comments.Remove(comment);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(TopicDetails), new { id = model.ForumTopicId});
+        }
     }
 }

@@ -230,6 +230,66 @@ namespace CarEnthusiasts.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = await data.Comments.FindAsync(id);
+
+            if (comment is null)
+            {
+                return BadRequest();
+            }
+
+            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return Unauthorized();
+            }
+
+            var commentModel = new DeleteCommentViewModel()
+            {
+                Id = comment.Id,
+                Text = comment.Text,
+            };
+
+            if (comment.NewsId != null)
+            {
+                commentModel.NewsId = comment.NewsId;
+            }
+            else
+            {
+                commentModel.ReviewId = comment.ReviewId;
+            }
+
+            return View(commentModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(DeleteCommentViewModel model)
+        {
+            var comment = await data.Comments.FindAsync(model.Id);
+
+            if (!ModelState.IsValid ||
+                comment is null ||
+                comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return BadRequest();
+            }
+
+            model.ForumTopicId = comment.ForumTopicId;
+
+            data.Comments.Remove(comment);
+            await data.SaveChangesAsync();
+
+            if (comment.NewsId != null)
+            {
+                return RedirectToAction(nameof(NewsInformation), new { id = comment.NewsId });
+            }
+            else
+            {
+                return RedirectToAction(nameof(ReviewInformation), new { id = comment.ReviewId });
+            }
+        }
+
         private List<NewsViewModel> GetNews()
         {
             var news = data.News
