@@ -34,7 +34,13 @@ else
             <p class="card-text">@comment.Text</p>
           </div>
         </div>
+
+        if (comment.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+              <a asp-controller="News" asp-action="EditComment" asp-route-id="@comment.Id" class="btn btn-primary mb-2 w-40 p-2 fw-bold">Edit</a>
+        }
     }
+
 }
 
 @if (User.Identity != null && User.Identity.IsAuthenticated == true)

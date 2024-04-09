@@ -172,6 +172,64 @@ namespace CarEnthusiasts.Controllers
             return RedirectToAction(nameof(ReviewInformation), new { id = reviewId });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditComment(int id)
+        {
+            var comment = await data.Comments.FindAsync(id);
+
+            if (comment is null)
+            {
+                return BadRequest();
+            }
+
+            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return BadRequest();
+            }
+
+            var editCommentForm = new EditCommentViewModel()
+            {
+                Id = comment.Id,
+                Text = comment.Text
+            };
+
+            return View(editCommentForm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditComment(EditCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var comment = await data.Comments.FindAsync(model.Id);
+
+            if (comment is null)
+            {
+                return BadRequest();
+            }
+
+            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return BadRequest();
+            }
+
+            comment.Text = model.Text;
+
+            await data.SaveChangesAsync();
+
+            if (comment.NewsId != null)
+            {
+                return RedirectToAction(nameof(NewsInformation), new { id = comment.NewsId });
+            }
+            else
+            {
+                return RedirectToAction(nameof(ReviewInformation), new { id = comment.ReviewId });
+            }
+        }
+
         private List<NewsViewModel> GetNews()
         {
             var news = data.News

@@ -4,6 +4,7 @@ namespace CarEnthusiasts.Models
 {
     public class EditCommentViewModel
     {
+        [Required]
         public int Id { get; set; }
 
         [Required]
