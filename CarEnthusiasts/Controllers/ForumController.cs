@@ -35,7 +35,10 @@ namespace CarEnthusiasts.Controllers
                 .OrderByDescending(x => x.CreatedOn)
                 .ToListAsync();
 
-            ForumTopicType[] forumTopics = { ForumTopicType.General, ForumTopicType.CommonProblems, ForumTopicType.TechnicalQuestions, ForumTopicType.CarMeets };
+            ForumTopicType[] forumTopics = { ForumTopicType.General,
+                ForumTopicType.CommonProblems,
+                ForumTopicType.TechnicalQuestions,
+                ForumTopicType.CarMeets };
 
             ViewBag.ForumTypes = forumTopics;
 
@@ -84,7 +87,7 @@ namespace CarEnthusiasts.Controllers
             if (!ModelState.IsValid ||
                 text is null ||
                 !data.ForumTopics.Any(x => x.Id == topicId) ||
-                User.FindFirstValue(ClaimTypes.NameIdentifier) != userId)
+                GetUserId() != userId)
             {
                 return BadRequest();
             }
@@ -113,7 +116,7 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (comment.UserId != GetUserId())
             {
                 return BadRequest();
             }
@@ -142,7 +145,7 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (comment.UserId != GetUserId())
             {
                 return BadRequest();
             }
@@ -164,7 +167,7 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            if (comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (comment.UserId != GetUserId())
             {
                 return Unauthorized();
             }
@@ -186,7 +189,7 @@ namespace CarEnthusiasts.Controllers
 
             if (!ModelState.IsValid ||
                 comment is null ||
-                comment.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                comment.UserId != GetUserId())
             {
                 return BadRequest();
             }
@@ -227,7 +230,7 @@ namespace CarEnthusiasts.Controllers
             {
                 Title = model.Title,
                 CreatedOn = DateTime.Now,
-                CreatorId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                CreatorId = GetUserId(),
                 Text = model.Text,
                 TopicType = model.TopicType
             };
@@ -249,7 +252,7 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            if (topic.CreatorId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (topic.CreatorId != GetUserId())
             {
                 return BadRequest();
             }
@@ -293,17 +296,68 @@ namespace CarEnthusiasts.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteTopic(int id)
         {
-            var topic = await data.ForumTopics
-                .Include(f => f.ForumTopicsFollowers)
-                .Include(c => c.Comments)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var topic = await data.ForumTopics.FindAsync(id);
 
             if (topic is null)
             {
                 return BadRequest();
             }
 
-            return View();
+            if (topic.CreatorId != GetUserId())
+            {
+                return BadRequest();
+            }
+
+            var topicModel = new ForumTopicDeleteViewModel
+            {
+                Id = topic.Id,
+                Title = topic.Title
+            };
+
+            return View(topicModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> DeleteTopicConfirmed(ForumTopicDeleteViewModel model)
+        {
+            var topic = await data.ForumTopics
+                .Include(x => x.ForumTopicsFollowers)
+                .Include(c => c.Comments)
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
+
+            if (topic is null)
+            {
+                return BadRequest();
+            }
+
+            if (topic.CreatorId != GetUserId())
+            {
+                return BadRequest();
+            }
+
+            var topicFollowers = topic.ForumTopicsFollowers.FirstOrDefault(x => x.ForumTopicId == topic.Id);
+            var comments = topic.Comments.FirstOrDefault(x => x.ForumTopicId == topic.Id);
+
+            if (comments is not null)
+            {
+                data.Comments.Remove(comments);
+            }
+
+            if (topicFollowers is not null)
+            {
+                data.ForumTopicsFollowers.Remove(topicFollowers);
+            }
+
+            data.ForumTopics.Remove(topic);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Home));
+        }
+
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }
