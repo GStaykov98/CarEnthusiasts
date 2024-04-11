@@ -2,6 +2,7 @@
 using CarEnthusiasts.Data.Models;
 using CarEnthusiasts.Data.Models.Enums;
 using CarEnthusiasts.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
@@ -196,6 +197,113 @@ namespace CarEnthusiasts.Controllers
             await data.SaveChangesAsync();
 
             return RedirectToAction(nameof(TopicDetails), new { id = model.ForumTopicId});
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult AddTopic()
+        {
+            var topic = new ForumTopicFormViewModel();
+
+            List<ForumTopicType> forumTopicTypes = Enum.GetValues(typeof(ForumTopicType))
+                .Cast<ForumTopicType>()
+                .ToList();
+
+            topic.TopicTypes = forumTopicTypes;
+
+            return View(topic);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddTopic(ForumTopicFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var topic = new ForumTopic()
+            {
+                Title = model.Title,
+                CreatedOn = DateTime.Now,
+                CreatorId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                Text = model.Text,
+                TopicType = model.TopicType
+            };
+
+            await data.ForumTopics.AddAsync(topic);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Home));
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> EditTopic(int id)
+        {
+            var topic = await data.ForumTopics.FindAsync(id);
+
+            if (topic is null)
+            {
+                return BadRequest();
+            }
+
+            if (topic.CreatorId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return BadRequest();
+            }
+
+            var topicModel = new ForumTopicFormViewModel()
+            {
+                Id = topic.Id,
+                Title = topic.Title,
+                Text = topic.Text,
+                TopicType = topic.TopicType
+            };
+
+            return View(topicModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditTopic(ForumTopicFormViewModel model)
+        {
+            var topic = await data.ForumTopics.FindAsync(model.Id);
+
+            if (topic is null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            topic.Title = model.Title;
+            topic.Text = model.Text;
+
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id});
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> DeleteTopic(int id)
+        {
+            var topic = await data.ForumTopics
+                .Include(f => f.ForumTopicsFollowers)
+                .Include(c => c.Comments)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (topic is null)
+            {
+                return BadRequest();
+            }
+
+            return View();
         }
     }
 }
