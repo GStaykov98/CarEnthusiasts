@@ -4,8 +4,10 @@ namespace CarEnthusiasts.Controllers
 {
     public class TuningPartsController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Home()
         {
+
+
             return View();
         }
     }

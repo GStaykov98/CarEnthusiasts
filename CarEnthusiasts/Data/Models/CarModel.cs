@@ -43,5 +43,6 @@ namespace CarEnthusiasts.Data.Models
         public CarBrand Brand { get; set; } = null!;
 
         public virtual ICollection<CarEngine> Engines { get; set; } = new List<CarEngine>();
+        public ICollection<TuningPartCarModel> TuningPartsCarModels { get; set; } = new List<TuningPartCarModel>();
     }
 }
