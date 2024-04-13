@@ -14,11 +14,19 @@
 	@Model.Description
 </div>
 
-<h2 class="text-center">@Model.Price BGN</h2>
+@if (Model.Quantity > 0)
+{
+	<h2 class="text-center">@Model.Price BGN</h2>
 
-<form class="text-center" asp-controller="TuningParts" asp-action="BuyPart" asp-route-id="@Model.Id">
-	<button type="submit" class="w-50 p-3 btn-primary" >Buy</button>
-</form>
+	<form class="text-center" asp-controller="TuningParts" asp-action="BuyPart" asp-route-id="@Model.Id" method="get">
+		<button type="submit" class="w-50 p-3 btn-primary">Buy</button>
+	</form>
+}
+else
+{
+	<h2 class="text-center">@Model.Price BGN</h2>
+	<h1 class="text-center">SOLD OUT!!!</h1>
+}
 
 <h2 class="text-center">Compatibility:</h2>
 

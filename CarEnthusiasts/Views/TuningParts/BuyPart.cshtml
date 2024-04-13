@@ -1,0 +1,46 @@
+﻿@model BuyPartViewModel
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="@Model.ImageUrl" class="img-fluid rounded-start" alt="Part Image">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@Model.PartName</h5>
+                <p class="card-text"><small class="text-body-secondary">@Model.Price BGN</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="BuyPart" method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.BuyerName" class="form-label-add-edit">Your name:</label>
+                <input asp-for="@Model.BuyerName" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.BuyerName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.BuyerEmail" class="form-label-add-edit">Your Email:</label>
+                <input asp-for="@Model.BuyerEmail" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.BuyerEmail" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.DeliveryAddress" class="form-label-add-edit">Delivery address:</label>
+                <input asp-for="@Model.DeliveryAddress" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.DeliveryAddress" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Buy part" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

@@ -92,5 +92,45 @@ namespace CarEnthusiasts.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> BuyPart(int id)
+        {
+            var part = await data.TuningParts.FindAsync(id);
+
+            if (part is null)
+            {
+                return BadRequest();
+            }
+
+            var model = new BuyPartViewModel
+            {
+                Id = part.Id,
+                PartName = part.Name,
+                Price = part.Price,
+                ImageUrl = part.ImageUrl
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BuyPart(BuyPartViewModel model)
+        {
+            var currentPart = await data.TuningParts.FindAsync(model.Id);
+
+            if (currentPart is null ||
+                !ModelState.IsValid ||
+                currentPart.Quantity == 0)
+            {
+                return BadRequest();
+            }
+
+            currentPart.Quantity--;
+
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Home));
+        }
     }
 }
