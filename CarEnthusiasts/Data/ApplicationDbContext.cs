@@ -25,6 +25,10 @@ namespace CarEnthusiasts.Data
                 .Entity<TuningPartCarModel>()
                 .HasKey(pk => new { pk.CarModelId, pk.TuningPartId });
 
+            modelBuilder
+                .Entity<ForumTopicLikes>()
+                .HasKey(pk => new { pk.UserId, pk.ForumTopicId });
+
 
 			modelBuilder
                 .Entity<CarBrand>()
@@ -922,5 +926,6 @@ namespace CarEnthusiasts.Data
         public DbSet<TuningPart> TuningParts { get; set;}
         public DbSet<TuningPartCategory> TuningPartCategories { get; set; }
         public DbSet<TuningPartCarModel> TuningPartsCarModels { get; set; }
+        public DbSet<ForumTopicLikes> ForumTopicsLikes { get; set; }
     }
 }

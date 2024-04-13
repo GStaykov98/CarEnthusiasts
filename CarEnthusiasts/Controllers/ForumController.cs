@@ -54,6 +54,8 @@ namespace CarEnthusiasts.Controllers
             }
 
             var currentTopic = await data.ForumTopics
+                .Include(f => f.ForumTopicsFollowers)
+                .Include(l => l.ForumTopicsLikes)
                 .Include(c => c.Comments)
                 .ThenInclude(u => u.User)
                 .Select(x => new ForumTopicDetailsViewModel
@@ -66,6 +68,7 @@ namespace CarEnthusiasts.Controllers
                     Comments = x.Comments,
                     FollowerCounter = x.ForumTopicsFollowers.Count,
                     ForumTopicsFollowers = x.ForumTopicsFollowers,
+                    ForumTopicsLikes = x.ForumTopicsLikes,
                     Text = x.Text
                 })
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -353,6 +356,114 @@ namespace CarEnthusiasts.Controllers
             await data.SaveChangesAsync();
 
             return RedirectToAction(nameof(Home));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> LikeTopic(int id)
+        {
+            var topic = await data.ForumTopics
+                .Include(l => l.ForumTopicsLikes)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (topic is null ||
+                topic.ForumTopicsLikes.Any(x => x.UserId == GetUserId()))
+            {
+                return BadRequest();
+            }
+
+            var topicLikeInteractor = new ForumTopicLikes
+            {
+                UserId = GetUserId(),
+                ForumTopicId = topic.Id
+            };
+
+            topic.LikeCounter++;
+            await data.ForumTopicsLikes.AddAsync(topicLikeInteractor);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> RemoveLike(int id)
+        {
+            var topic = await data.ForumTopics
+                .Include(tf => tf.ForumTopicsLikes)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (topic is null ||
+                !topic.ForumTopicsLikes.Any(x => x.UserId == GetUserId()))
+            {
+                return BadRequest();
+            }
+
+            var topicLikeInteractor = await data.ForumTopicsLikes
+                .FirstOrDefaultAsync(x => x.ForumTopicId == id && x.UserId == GetUserId());
+
+            if (topicLikeInteractor is null)
+            {
+                return BadRequest();
+            }
+
+            topic.LikeCounter--;
+            data.ForumTopicsLikes.Remove(topicLikeInteractor);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> FollowTopic(int id)
+        {
+            var topic = await data.ForumTopics
+                .Include(tf => tf.ForumTopicsFollowers)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (topic is null ||
+                topic.ForumTopicsFollowers.Any(x => x.FollowerId == GetUserId()))
+            {
+                return BadRequest();
+            }
+
+            var topicFollower = new ForumTopicFollower
+            {
+                ForumTopicId = topic.Id,
+                FollowerId = GetUserId()
+            };
+
+            topic.FollowerCounter++;
+            await data.ForumTopicsFollowers.AddAsync(topicFollower);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> UnfollowTopic(int id)
+        {
+            var topic = await data.ForumTopics
+                .Include(tf => tf.ForumTopicsFollowers)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (topic is null ||
+                !topic.ForumTopicsFollowers.Any(x => x.FollowerId == GetUserId()))
+            {
+                return BadRequest();
+            }
+
+            var topicFollower = await data.ForumTopicsFollowers
+                .FirstOrDefaultAsync(x => x.ForumTopicId == id && x.FollowerId == GetUserId());
+
+            if (topicFollower is null)
+            {
+                return BadRequest();
+            }
+
+            topic.FollowerCounter--;
+            data.ForumTopicsFollowers.Remove(topicFollower);
+            await data.SaveChangesAsync();
+
+            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
         }
 
         private string GetUserId()

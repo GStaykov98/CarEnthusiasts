@@ -13,9 +13,37 @@
     </div>
     <div class="col">
       Likes: @Model.LikeCounter
-    </div>
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                if (Model.Creator.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    if (!Model.ForumTopicsLikes.Any(x => x.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                    {
+                        <a asp-action="LikeTopic" asp-route-id="@Model.Id" class="btn btn-primary">Like</a>
+                    }
+                    else
+                    {
+                        <a asp-action="RemoveLike" asp-route-id="@Model.Id" class="btn btn-primary">Remove Like</a>
+                    }
+                }
+            }
+        </div>
     <div class="col">
         Followers: @Model.FollowerCounter
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                if (Model.Creator.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    if (!Model.ForumTopicsFollowers.Any(x => x.FollowerId == User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                    {
+                        <a asp-action="FollowTopic" asp-route-id="@Model.Id" class="btn btn-primary">Follow</a>
+                    }
+                    else
+                    {
+                        <a asp-action="UnfollowTopic" asp-route-id="@Model.Id" class="btn btn-primary">Unfollow</a>
+                    }
+                }
+            }
     </div>
   </div>
 </div>
@@ -24,8 +52,11 @@
 
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
-    <a asp-controller="Forum" asp-action="EditTopic" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit topic</a>
-    <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-id="@Model.Id" class="btn btn-danger mb-2 w-100 p-3 fw-bold">Delete topic</a>
+    if (Model.Creator.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+    {
+        <a asp-controller="Forum" asp-action="EditTopic" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit topic</a>
+        <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-id="@Model.Id" class="btn btn-danger mb-2 w-100 p-3 fw-bold">Delete topic</a>
+    }
 }
 
 @if (!Model.Comments.Any())

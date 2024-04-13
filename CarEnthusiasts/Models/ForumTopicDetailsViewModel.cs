@@ -23,5 +23,7 @@ namespace CarEnthusiasts.Models
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
         public ICollection<ForumTopicFollower> ForumTopicsFollowers { get; set; } = new List<ForumTopicFollower>();
+
+        public ICollection<ForumTopicLikes> ForumTopicsLikes { get; set; } = new List<ForumTopicLikes>();
     }
 }
