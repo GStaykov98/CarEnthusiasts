@@ -1,0 +1,32 @@
+﻿@model TuningPartDetailsIViewModel
+
+@{
+	ViewBag.Title = Model.Name;
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<div class="text-center">
+	<img src="@Model.ImageUrl" width="600" height="500">
+</div>
+
+<div class="text-center">
+	@Model.Description
+</div>
+
+<h2 class="text-center">@Model.Price BGN</h2>
+
+<form class="text-center" asp-controller="TuningParts" asp-action="BuyPart" asp-route-id="@Model.Id">
+	<button type="submit" class="w-50 p-3 btn-primary" >Buy</button>
+</form>
+
+<h2 class="text-center">Compatibility:</h2>
+
+<div class="text-center">
+	<ul class="list-group list-group-flush">
+		@foreach (var car in Model.CarModels)
+		{
+			<li class="list-group-item">@car.BrandName @car.ModelName</li>
+		}
+	</ul>
+</div>

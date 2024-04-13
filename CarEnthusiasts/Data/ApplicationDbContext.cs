@@ -10,8 +10,12 @@ namespace CarEnthusiasts.Data
             : base(options)
         {
         }
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder.EnableSensitiveDataLogging();
+		}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.
                 Entity<ForumTopicFollower>()
@@ -19,9 +23,10 @@ namespace CarEnthusiasts.Data
 
             modelBuilder
                 .Entity<TuningPartCarModel>()
-                .HasKey(pk => new { pk.TuningPartId, pk.CarModelId });
+                .HasKey(pk => new { pk.CarModelId, pk.TuningPartId });
 
-            modelBuilder
+
+			modelBuilder
                 .Entity<CarBrand>()
                 .HasData(new CarBrand()
                 {
@@ -625,6 +630,284 @@ namespace CarEnthusiasts.Data
                     Name = "21\" Forgiato Wheels Blocco Gloss Black",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
                 });
+
+            modelBuilder
+                .Entity<TuningPartCarModel>()
+                .HasData(new TuningPartCarModel
+                {
+                    CarModelId = 3,
+                    TuningPartId = 1
+                },
+                new TuningPartCarModel
+				{
+					TuningPartId = 1,
+					CarModelId = 1
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 1,
+					CarModelId = 7
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 2,
+					CarModelId = 1
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 2,
+					CarModelId = 3
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 2,
+					CarModelId = 7
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 3,
+					CarModelId = 5
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 3,
+					CarModelId = 8
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 4,
+					CarModelId = 3
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 4,
+					CarModelId = 5
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 4,
+					CarModelId = 7
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 4,
+					CarModelId = 8
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 5,
+					CarModelId = 1
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 5,
+					CarModelId = 2
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 5,
+					CarModelId = 3
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 5,
+					CarModelId = 4
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 5,
+					CarModelId = 5
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 5,
+					CarModelId = 6
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 6,
+					CarModelId = 7
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 7,
+					CarModelId = 1
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 7,
+					CarModelId = 2
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 7,
+					CarModelId = 3
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 7,
+					CarModelId = 4
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 7,
+					CarModelId = 5
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 7,
+					CarModelId = 6
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 8,
+					CarModelId = 1
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 8,
+					CarModelId = 2
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 8,
+					CarModelId = 3
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 8,
+					CarModelId = 4
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 8,
+					CarModelId = 5
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 8,
+					CarModelId = 6
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 9,
+					CarModelId = 1
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 9,
+					CarModelId = 3
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 9,
+					CarModelId = 5
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 9,
+					CarModelId = 7
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 10,
+					CarModelId = 2
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 10,
+					CarModelId = 4
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 10,
+					CarModelId = 6
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 10,
+					CarModelId = 8
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 11,
+					CarModelId = 1
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 11,
+					CarModelId = 2
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 11,
+					CarModelId = 3
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 11,
+					CarModelId = 4
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 11,
+					CarModelId = 5
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 11,
+					CarModelId = 6
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 11,
+					CarModelId = 7
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 11,
+					CarModelId = 8
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 12,
+					CarModelId = 1
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 12,
+					CarModelId = 2
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 12,
+					CarModelId = 3
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 12,
+					CarModelId = 4
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 12,
+					CarModelId = 5
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 12,
+					CarModelId = 6
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 12,
+					CarModelId = 7
+				},
+				new TuningPartCarModel
+				{
+					TuningPartId = 12,
+					CarModelId = 8
+				});
 
             base.OnModelCreating(modelBuilder);
         }

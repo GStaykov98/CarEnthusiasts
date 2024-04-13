@@ -52,18 +52,45 @@ namespace CarEnthusiasts.Controllers
             return View(tuningParts);
         }
 
-        public async Task<IActionResult> PartDetail(int id)
+        public async Task<IActionResult> PartDetails(int id)
         {
-            var currentPart = await data.TuningParts.FindAsync(id);
-
-            if (currentPart == null)
+            if (id < 0)
             {
                 return BadRequest();
             }
 
+            var carModel = data.CarModels
+                .Include(x => x.Brand)
+                .Include(z => z.TuningPartsCarModels.Where(y => y.TuningPartId == id))
+                .Where(x => x.TuningPartsCarModels.Any(z => z.TuningPartId == id))
+                .ToList();
 
+            var model = await data.TuningParts
+                .Include(x => x.TuningPartsCarModels)
+                .Select(x => new TuningPartDetailsIViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Quantity = x.Quantity,
+                    ImageUrl = x.ImageUrl,
+                    Description = x.Description,
+                    TuningPartsCarModels = x.TuningPartsCarModels,
+                    Category = x.Category
+                })
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-            return View();
+            if (model is null)
+            {
+                return BadRequest();
+            }
+
+            foreach (var z in carModel)
+            {
+                model.CarModels.Add(new TuningPartCarModelViewModel { BrandName = z.Brand.Name, ModelName = z.Name });
+            }
+
+            return View(model);
         }
     }
 }
