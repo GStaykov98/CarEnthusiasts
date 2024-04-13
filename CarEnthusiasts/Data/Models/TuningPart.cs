@@ -21,6 +21,9 @@ namespace CarEnthusiasts.Data.Models
         public string Description { get; set; } = string.Empty;
 
         [Required]
+        public string ImageUrl { get; set; } = string.Empty;
+
+        [Required]
         public int CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]

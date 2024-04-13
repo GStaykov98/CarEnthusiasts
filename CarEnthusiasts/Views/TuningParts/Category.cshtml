@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TuningPartViewModel>
+
+@foreach (var part in Model)
+{
+    <a asp-controller="TuningParts" asp-action="PartDetails" asp-route-id="@part.Id">
+        <div class="card" style="width: 25rem;">
+            <img src="@part.ImageUrl" class="card-img-top" alt="Part Image">
+            <div class="card-body">
+                <h5 class="card-title">@part.Name</h5>
+                @if (part.Quantity == 0)
+                {
+                    <p class="card-text">Sold out!!!</p>
+                }
+                else
+                {
+                    <p class="card-text">Price: @part.Price BGN</p>
+                }
+            </div>
+        </div>
+    </a>
+}

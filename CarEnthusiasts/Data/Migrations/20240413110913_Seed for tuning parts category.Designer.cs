@@ -4,6 +4,7 @@ using CarEnthusiasts.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarEnthusiasts.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240413110913_Seed for tuning parts category")]
+    partial class Seedfortuningpartscategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -563,7 +565,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2024, 4, 13, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7837),
+                            CreatedOn = new DateTime(2024, 4, 13, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4853),
                             CreatorId = "5ac561d9-127e-4017-8e82-19372d14c26a",
                             FollowerCounter = 0,
                             LikeCounter = 0,
@@ -574,7 +576,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2024, 4, 8, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7840),
+                            CreatedOn = new DateTime(2024, 4, 8, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4856),
                             CreatorId = "5ac561d9-127e-4017-8e82-19372d14c26a",
                             FollowerCounter = 0,
                             LikeCounter = 0,
@@ -585,7 +587,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2024, 4, 13, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7842),
+                            CreatedOn = new DateTime(2024, 4, 13, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4858),
                             CreatorId = "5ac561d9-127e-4017-8e82-19372d14c26a",
                             FollowerCounter = 0,
                             LikeCounter = 0,
@@ -596,7 +598,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2024, 4, 10, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7845),
+                            CreatedOn = new DateTime(2024, 4, 10, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4861),
                             CreatorId = "5ac561d9-127e-4017-8e82-19372d14c26a",
                             FollowerCounter = 0,
                             LikeCounter = 0,
@@ -655,7 +657,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2024, 4, 13, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7766),
+                            CreatedOn = new DateTime(2024, 4, 13, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4758),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus hendrerit tincidunt gravida. Phasellus congue pulvinar purus, dapibus sagittis augue convallis id. Nulla tristique lacus neque, at convallis sem tempus at. Nunc sollicitudin quis arcu id tincidunt. Curabitur in odio vitae nunc suscipit pharetra. Nullam id tortor non mauris faucibus rutrum. Suspendisse sed ligula quis urna mattis efficitur. Donec a gravida arcu, at gravida odio. Pellentesque ultricies tempor eros. Donec nec libero quis turpis placerat hendrerit. Aliquam blandit vehicula libero eu feugiat. Ut a fringilla quam, nec vulputate nunc. Proin quis tortor a odio imperdiet venenatis eget sed ligula. Nulla vel dolor dictum, aliquet eros ac, aliquet dolor. Nulla fringilla volutpat ante, a consectetur erat semper et. Integer efficitur scelerisque felis non lacinia.\r\n\r\nSed vel felis at enim consectetur gravida a vitae felis. Duis vitae cursus sapien. Curabitur porta ipsum sit amet tellus tristique, sed dapibus est dictum. Sed posuere diam elit, non viverra est semper et. In dictum, velit facilisis varius volutpat, tellus dui elementum nisl, nec fermentum lorem elit id ligula. Vestibulum lobortis semper lectus eu dapibus. Sed ipsum libero, commodo a lacus ut, fermentum tempor metus. Pellentesque sagittis arcu a sollicitudin tincidunt. Aenean in pellentesque lectus. Vivamus commodo ultrices ligula, vitae tristique eros accumsan non. Pellentesque quis bibendum felis. Mauris mauris neque, interdum quis arcu eleifend, commodo lacinia lectus. Etiam accumsan est neque, sed aliquet erat euismod nec. Fusce ultrices ante in dui ornare, ac ornare risus consectetur. Nullam ut egestas arcu.\r\n\r\nAliquam eget dolor neque. Nullam cursus ornare ex, eget lobortis augue tincidunt et. Duis augue est, accumsan sit amet placerat ut, rutrum suscipit lacus. Vestibulum ultrices ut elit eget fringilla. Etiam vel dolor eget felis tincidunt pretium non non orci. Donec sit amet egestas tellus, ac imperdiet nibh. Cras sed viverra dui, vel posuere quam. Pellentesque at blandit leo. Donec ut suscipit eros, vitae interdum libero. Donec imperdiet id metus non fermentum. Nulla quis efficitur metus. Integer vitae ipsum eget magna viverra tristique id id nunc. Duis metus velit, faucibus eu neque mollis, euismod eleifend massa.\r\n\r\nCras efficitur aliquam tortor vel consequat. Ut sodales eget mi sit amet porta. Vestibulum laoreet sit amet ante euismod eleifend. Nulla elementum consequat nunc ut vulputate. Vestibulum vel auctor lacus. Sed euismod condimentum volutpat. Pellentesque finibus iaculis lorem. Maecenas congue eleifend turpis in porta.\r\n\r\nFusce lacinia tincidunt tellus et malesuada. Proin non consectetur arcu. Cras lacinia sem eu purus finibus suscipit. Fusce sapien urna, bibendum in sem et, suscipit pretium dolor. Aenean malesuada, massa at mattis varius, odio velit laoreet dui, nec fermentum tortor libero quis orci. Donec diam sapien, convallis at justo a, tincidunt facilisis elit. Nullam a arcu id sem interdum consequat. Quisque porttitor non augue quis finibus. Quisque at ornare enim.",
                             ImageUrl = "https://cdn.motor1.com/images/mgl/BXNkj6/s1/2024-lexus-lbx-morizo-rr-concept.webp",
                             Title = "Lexus with GR Corolla Power 'Highly Likely' to Enter Production",
@@ -664,7 +666,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2024, 4, 12, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7800),
+                            CreatedOn = new DateTime(2024, 4, 12, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4792),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus hendrerit tincidunt gravida. Phasellus congue pulvinar purus, dapibus sagittis augue convallis id. Nulla tristique lacus neque, at convallis sem tempus at. Nunc sollicitudin quis arcu id tincidunt. Curabitur in odio vitae nunc suscipit pharetra. Nullam id tortor non mauris faucibus rutrum. Suspendisse sed ligula quis urna mattis efficitur. Donec a gravida arcu, at gravida odio. Pellentesque ultricies tempor eros. Donec nec libero quis turpis placerat hendrerit. Aliquam blandit vehicula libero eu feugiat. Ut a fringilla quam, nec vulputate nunc. Proin quis tortor a odio imperdiet venenatis eget sed ligula. Nulla vel dolor dictum, aliquet eros ac, aliquet dolor. Nulla fringilla volutpat ante, a consectetur erat semper et. Integer efficitur scelerisque felis non lacinia.\r\n\r\nSed vel felis at enim consectetur gravida a vitae felis. Duis vitae cursus sapien. Curabitur porta ipsum sit amet tellus tristique, sed dapibus est dictum. Sed posuere diam elit, non viverra est semper et. In dictum, velit facilisis varius volutpat, tellus dui elementum nisl, nec fermentum lorem elit id ligula. Vestibulum lobortis semper lectus eu dapibus. Sed ipsum libero, commodo a lacus ut, fermentum tempor metus. Pellentesque sagittis arcu a sollicitudin tincidunt. Aenean in pellentesque lectus. Vivamus commodo ultrices ligula, vitae tristique eros accumsan non. Pellentesque quis bibendum felis. Mauris mauris neque, interdum quis arcu eleifend, commodo lacinia lectus. Etiam accumsan est neque, sed aliquet erat euismod nec. Fusce ultrices ante in dui ornare, ac ornare risus consectetur. Nullam ut egestas arcu.\r\n\r\nAliquam eget dolor neque. Nullam cursus ornare ex, eget lobortis augue tincidunt et. Duis augue est, accumsan sit amet placerat ut, rutrum suscipit lacus. Vestibulum ultrices ut elit eget fringilla. Etiam vel dolor eget felis tincidunt pretium non non orci. Donec sit amet egestas tellus, ac imperdiet nibh. Cras sed viverra dui, vel posuere quam. Pellentesque at blandit leo. Donec ut suscipit eros, vitae interdum libero. Donec imperdiet id metus non fermentum. Nulla quis efficitur metus. Integer vitae ipsum eget magna viverra tristique id id nunc. Duis metus velit, faucibus eu neque mollis, euismod eleifend massa.\r\n\r\nCras efficitur aliquam tortor vel consequat. Ut sodales eget mi sit amet porta. Vestibulum laoreet sit amet ante euismod eleifend. Nulla elementum consequat nunc ut vulputate. Vestibulum vel auctor lacus. Sed euismod condimentum volutpat. Pellentesque finibus iaculis lorem. Maecenas congue eleifend turpis in porta.\r\n\r\nFusce lacinia tincidunt tellus et malesuada. Proin non consectetur arcu. Cras lacinia sem eu purus finibus suscipit. Fusce sapien urna, bibendum in sem et, suscipit pretium dolor. Aenean malesuada, massa at mattis varius, odio velit laoreet dui, nec fermentum tortor libero quis orci. Donec diam sapien, convallis at justo a, tincidunt facilisis elit. Nullam a arcu id sem interdum consequat. Quisque porttitor non augue quis finibus. Quisque at ornare enim.",
                             ImageUrl = "https://cdn.motor1.com/images/mgl/8Avv8M/s1/renault-captur-2024.webp",
                             Title = "The New Renault Captur Gets Esprit Alpine Trim, Loses Leather",
@@ -673,7 +675,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2024, 4, 11, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7803),
+                            CreatedOn = new DateTime(2024, 4, 11, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4795),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus hendrerit tincidunt gravida. Phasellus congue pulvinar purus, dapibus sagittis augue convallis id. Nulla tristique lacus neque, at convallis sem tempus at. Nunc sollicitudin quis arcu id tincidunt. Curabitur in odio vitae nunc suscipit pharetra. Nullam id tortor non mauris faucibus rutrum. Suspendisse sed ligula quis urna mattis efficitur. Donec a gravida arcu, at gravida odio. Pellentesque ultricies tempor eros. Donec nec libero quis turpis placerat hendrerit. Aliquam blandit vehicula libero eu feugiat. Ut a fringilla quam, nec vulputate nunc. Proin quis tortor a odio imperdiet venenatis eget sed ligula. Nulla vel dolor dictum, aliquet eros ac, aliquet dolor. Nulla fringilla volutpat ante, a consectetur erat semper et. Integer efficitur scelerisque felis non lacinia.\r\n\r\nSed vel felis at enim consectetur gravida a vitae felis. Duis vitae cursus sapien. Curabitur porta ipsum sit amet tellus tristique, sed dapibus est dictum. Sed posuere diam elit, non viverra est semper et. In dictum, velit facilisis varius volutpat, tellus dui elementum nisl, nec fermentum lorem elit id ligula. Vestibulum lobortis semper lectus eu dapibus. Sed ipsum libero, commodo a lacus ut, fermentum tempor metus. Pellentesque sagittis arcu a sollicitudin tincidunt. Aenean in pellentesque lectus. Vivamus commodo ultrices ligula, vitae tristique eros accumsan non. Pellentesque quis bibendum felis. Mauris mauris neque, interdum quis arcu eleifend, commodo lacinia lectus. Etiam accumsan est neque, sed aliquet erat euismod nec. Fusce ultrices ante in dui ornare, ac ornare risus consectetur. Nullam ut egestas arcu.\r\n\r\nAliquam eget dolor neque. Nullam cursus ornare ex, eget lobortis augue tincidunt et. Duis augue est, accumsan sit amet placerat ut, rutrum suscipit lacus. Vestibulum ultrices ut elit eget fringilla. Etiam vel dolor eget felis tincidunt pretium non non orci. Donec sit amet egestas tellus, ac imperdiet nibh. Cras sed viverra dui, vel posuere quam. Pellentesque at blandit leo. Donec ut suscipit eros, vitae interdum libero. Donec imperdiet id metus non fermentum. Nulla quis efficitur metus. Integer vitae ipsum eget magna viverra tristique id id nunc. Duis metus velit, faucibus eu neque mollis, euismod eleifend massa.\r\n\r\nCras efficitur aliquam tortor vel consequat. Ut sodales eget mi sit amet porta. Vestibulum laoreet sit amet ante euismod eleifend. Nulla elementum consequat nunc ut vulputate. Vestibulum vel auctor lacus. Sed euismod condimentum volutpat. Pellentesque finibus iaculis lorem. Maecenas congue eleifend turpis in porta.\r\n\r\nFusce lacinia tincidunt tellus et malesuada. Proin non consectetur arcu. Cras lacinia sem eu purus finibus suscipit. Fusce sapien urna, bibendum in sem et, suscipit pretium dolor. Aenean malesuada, massa at mattis varius, odio velit laoreet dui, nec fermentum tortor libero quis orci. Donec diam sapien, convallis at justo a, tincidunt facilisis elit. Nullam a arcu id sem interdum consequat. Quisque porttitor non augue quis finibus. Quisque at ornare enim.",
                             ImageUrl = "https://cdn.motor1.com/images/mgl/JOBVYn/s1/2024-mitsuoka-ryugi.webp",
                             Title = "The 2024 Mitsuoka Ryugi is a Fake British Sedan Based on a Corolla",
@@ -715,7 +717,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2024, 4, 13, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7818),
+                            CreatedOn = new DateTime(2024, 4, 13, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4808),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus hendrerit tincidunt gravida. Phasellus congue pulvinar purus, dapibus sagittis augue convallis id. Nulla tristique lacus neque, at convallis sem tempus at. Nunc sollicitudin quis arcu id tincidunt. Curabitur in odio vitae nunc suscipit pharetra. Nullam id tortor non mauris faucibus rutrum. Suspendisse sed ligula quis urna mattis efficitur. Donec a gravida arcu, at gravida odio. Pellentesque ultricies tempor eros. Donec nec libero quis turpis placerat hendrerit. Aliquam blandit vehicula libero eu feugiat. Ut a fringilla quam, nec vulputate nunc. Proin quis tortor a odio imperdiet venenatis eget sed ligula. Nulla vel dolor dictum, aliquet eros ac, aliquet dolor. Nulla fringilla volutpat ante, a consectetur erat semper et. Integer efficitur scelerisque felis non lacinia.\r\n\r\nSed vel felis at enim consectetur gravida a vitae felis. Duis vitae cursus sapien. Curabitur porta ipsum sit amet tellus tristique, sed dapibus est dictum. Sed posuere diam elit, non viverra est semper et. In dictum, velit facilisis varius volutpat, tellus dui elementum nisl, nec fermentum lorem elit id ligula. Vestibulum lobortis semper lectus eu dapibus. Sed ipsum libero, commodo a lacus ut, fermentum tempor metus. Pellentesque sagittis arcu a sollicitudin tincidunt. Aenean in pellentesque lectus. Vivamus commodo ultrices ligula, vitae tristique eros accumsan non. Pellentesque quis bibendum felis. Mauris mauris neque, interdum quis arcu eleifend, commodo lacinia lectus. Etiam accumsan est neque, sed aliquet erat euismod nec. Fusce ultrices ante in dui ornare, ac ornare risus consectetur. Nullam ut egestas arcu.\r\n\r\nAliquam eget dolor neque. Nullam cursus ornare ex, eget lobortis augue tincidunt et. Duis augue est, accumsan sit amet placerat ut, rutrum suscipit lacus. Vestibulum ultrices ut elit eget fringilla. Etiam vel dolor eget felis tincidunt pretium non non orci. Donec sit amet egestas tellus, ac imperdiet nibh. Cras sed viverra dui, vel posuere quam. Pellentesque at blandit leo. Donec ut suscipit eros, vitae interdum libero. Donec imperdiet id metus non fermentum. Nulla quis efficitur metus. Integer vitae ipsum eget magna viverra tristique id id nunc. Duis metus velit, faucibus eu neque mollis, euismod eleifend massa.\r\n\r\nCras efficitur aliquam tortor vel consequat. Ut sodales eget mi sit amet porta. Vestibulum laoreet sit amet ante euismod eleifend. Nulla elementum consequat nunc ut vulputate. Vestibulum vel auctor lacus. Sed euismod condimentum volutpat. Pellentesque finibus iaculis lorem. Maecenas congue eleifend turpis in porta.\r\n\r\nFusce lacinia tincidunt tellus et malesuada. Proin non consectetur arcu. Cras lacinia sem eu purus finibus suscipit. Fusce sapien urna, bibendum in sem et, suscipit pretium dolor. Aenean malesuada, massa at mattis varius, odio velit laoreet dui, nec fermentum tortor libero quis orci. Donec diam sapien, convallis at justo a, tincidunt facilisis elit. Nullam a arcu id sem interdum consequat. Quisque porttitor non augue quis finibus. Quisque at ornare enim.",
                             ImageUrl = "https://cdn.motor1.com/images/mgl/koEWrQ/s1/2024-toyota-prius-prime-review.webp",
                             Title = "The Toyota Prius Prime Makes Most EVs Obsolete",
@@ -724,7 +726,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2024, 4, 11, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7820),
+                            CreatedOn = new DateTime(2024, 4, 11, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4810),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus hendrerit tincidunt gravida. Phasellus congue pulvinar purus, dapibus sagittis augue convallis id. Nulla tristique lacus neque, at convallis sem tempus at. Nunc sollicitudin quis arcu id tincidunt. Curabitur in odio vitae nunc suscipit pharetra. Nullam id tortor non mauris faucibus rutrum. Suspendisse sed ligula quis urna mattis efficitur. Donec a gravida arcu, at gravida odio. Pellentesque ultricies tempor eros. Donec nec libero quis turpis placerat hendrerit. Aliquam blandit vehicula libero eu feugiat. Ut a fringilla quam, nec vulputate nunc. Proin quis tortor a odio imperdiet venenatis eget sed ligula. Nulla vel dolor dictum, aliquet eros ac, aliquet dolor. Nulla fringilla volutpat ante, a consectetur erat semper et. Integer efficitur scelerisque felis non lacinia.\r\n\r\nSed vel felis at enim consectetur gravida a vitae felis. Duis vitae cursus sapien. Curabitur porta ipsum sit amet tellus tristique, sed dapibus est dictum. Sed posuere diam elit, non viverra est semper et. In dictum, velit facilisis varius volutpat, tellus dui elementum nisl, nec fermentum lorem elit id ligula. Vestibulum lobortis semper lectus eu dapibus. Sed ipsum libero, commodo a lacus ut, fermentum tempor metus. Pellentesque sagittis arcu a sollicitudin tincidunt. Aenean in pellentesque lectus. Vivamus commodo ultrices ligula, vitae tristique eros accumsan non. Pellentesque quis bibendum felis. Mauris mauris neque, interdum quis arcu eleifend, commodo lacinia lectus. Etiam accumsan est neque, sed aliquet erat euismod nec. Fusce ultrices ante in dui ornare, ac ornare risus consectetur. Nullam ut egestas arcu.\r\n\r\nAliquam eget dolor neque. Nullam cursus ornare ex, eget lobortis augue tincidunt et. Duis augue est, accumsan sit amet placerat ut, rutrum suscipit lacus. Vestibulum ultrices ut elit eget fringilla. Etiam vel dolor eget felis tincidunt pretium non non orci. Donec sit amet egestas tellus, ac imperdiet nibh. Cras sed viverra dui, vel posuere quam. Pellentesque at blandit leo. Donec ut suscipit eros, vitae interdum libero. Donec imperdiet id metus non fermentum. Nulla quis efficitur metus. Integer vitae ipsum eget magna viverra tristique id id nunc. Duis metus velit, faucibus eu neque mollis, euismod eleifend massa.\r\n\r\nCras efficitur aliquam tortor vel consequat. Ut sodales eget mi sit amet porta. Vestibulum laoreet sit amet ante euismod eleifend. Nulla elementum consequat nunc ut vulputate. Vestibulum vel auctor lacus. Sed euismod condimentum volutpat. Pellentesque finibus iaculis lorem. Maecenas congue eleifend turpis in porta.\r\n\r\nFusce lacinia tincidunt tellus et malesuada. Proin non consectetur arcu. Cras lacinia sem eu purus finibus suscipit. Fusce sapien urna, bibendum in sem et, suscipit pretium dolor. Aenean malesuada, massa at mattis varius, odio velit laoreet dui, nec fermentum tortor libero quis orci. Donec diam sapien, convallis at justo a, tincidunt facilisis elit. Nullam a arcu id sem interdum consequat. Quisque porttitor non augue quis finibus. Quisque at ornare enim.",
                             ImageUrl = "https://cdn.motor1.com/images/mgl/W8MYJN/s1/2024-mercedes-e450-4matic-review.webp",
                             Title = "The Mercedes-Benz E450 Has One Mission: Comfort Above Everything",
@@ -733,7 +735,7 @@ namespace CarEnthusiasts.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2024, 4, 9, 14, 50, 28, 994, DateTimeKind.Local).AddTicks(7822),
+                            CreatedOn = new DateTime(2024, 4, 9, 14, 9, 13, 137, DateTimeKind.Local).AddTicks(4812),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus hendrerit tincidunt gravida. Phasellus congue pulvinar purus, dapibus sagittis augue convallis id. Nulla tristique lacus neque, at convallis sem tempus at. Nunc sollicitudin quis arcu id tincidunt. Curabitur in odio vitae nunc suscipit pharetra. Nullam id tortor non mauris faucibus rutrum. Suspendisse sed ligula quis urna mattis efficitur. Donec a gravida arcu, at gravida odio. Pellentesque ultricies tempor eros. Donec nec libero quis turpis placerat hendrerit. Aliquam blandit vehicula libero eu feugiat. Ut a fringilla quam, nec vulputate nunc. Proin quis tortor a odio imperdiet venenatis eget sed ligula. Nulla vel dolor dictum, aliquet eros ac, aliquet dolor. Nulla fringilla volutpat ante, a consectetur erat semper et. Integer efficitur scelerisque felis non lacinia.\r\n\r\nSed vel felis at enim consectetur gravida a vitae felis. Duis vitae cursus sapien. Curabitur porta ipsum sit amet tellus tristique, sed dapibus est dictum. Sed posuere diam elit, non viverra est semper et. In dictum, velit facilisis varius volutpat, tellus dui elementum nisl, nec fermentum lorem elit id ligula. Vestibulum lobortis semper lectus eu dapibus. Sed ipsum libero, commodo a lacus ut, fermentum tempor metus. Pellentesque sagittis arcu a sollicitudin tincidunt. Aenean in pellentesque lectus. Vivamus commodo ultrices ligula, vitae tristique eros accumsan non. Pellentesque quis bibendum felis. Mauris mauris neque, interdum quis arcu eleifend, commodo lacinia lectus. Etiam accumsan est neque, sed aliquet erat euismod nec. Fusce ultrices ante in dui ornare, ac ornare risus consectetur. Nullam ut egestas arcu.\r\n\r\nAliquam eget dolor neque. Nullam cursus ornare ex, eget lobortis augue tincidunt et. Duis augue est, accumsan sit amet placerat ut, rutrum suscipit lacus. Vestibulum ultrices ut elit eget fringilla. Etiam vel dolor eget felis tincidunt pretium non non orci. Donec sit amet egestas tellus, ac imperdiet nibh. Cras sed viverra dui, vel posuere quam. Pellentesque at blandit leo. Donec ut suscipit eros, vitae interdum libero. Donec imperdiet id metus non fermentum. Nulla quis efficitur metus. Integer vitae ipsum eget magna viverra tristique id id nunc. Duis metus velit, faucibus eu neque mollis, euismod eleifend massa.\r\n\r\nCras efficitur aliquam tortor vel consequat. Ut sodales eget mi sit amet porta. Vestibulum laoreet sit amet ante euismod eleifend. Nulla elementum consequat nunc ut vulputate. Vestibulum vel auctor lacus. Sed euismod condimentum volutpat. Pellentesque finibus iaculis lorem. Maecenas congue eleifend turpis in porta.\r\n\r\nFusce lacinia tincidunt tellus et malesuada. Proin non consectetur arcu. Cras lacinia sem eu purus finibus suscipit. Fusce sapien urna, bibendum in sem et, suscipit pretium dolor. Aenean malesuada, massa at mattis varius, odio velit laoreet dui, nec fermentum tortor libero quis orci. Donec diam sapien, convallis at justo a, tincidunt facilisis elit. Nullam a arcu id sem interdum consequat. Quisque porttitor non augue quis finibus. Quisque at ornare enim.",
                             ImageUrl = "https://cdn.motor1.com/images/mgl/1ZKQWq/s1/2024-acura-mdx-type-s-review.webp",
                             Title = "The Acura MDX Type S Is So Close to Greatness",
@@ -775,128 +777,6 @@ namespace CarEnthusiasts.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("TuningParts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://m.media-amazon.com/images/I/71x5FmPr53L.jpg",
-                            Name = "2 Pieces Universal Racing Seats,With Dual Lock Sliders",
-                            Price = 249.99000000000001,
-                            Quantity = 5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://www.outcastgarage.com/cdn/shop/products/BRR1R-BKRP_1_1800x1800.jpg?v=1540248523",
-                            Name = "BRAUM Racing Elite-R Series Racing Seats",
-                            Price = 135.5,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://cdn.autostyle.co.za/wp-content/uploads/2022/06/28183552/X1-022CA.jpg",
-                            Name = "Type-R Sports Steering Wheel (Black & Carbon Fibre Design)",
-                            Price = 59.850000000000001,
-                            Quantity = 10
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 2,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://www.kmpdrivetrain.com/wp-content/uploads/2020/04/4SW-01-600x600.png",
-                            Name = "KMP E-sport racing wheel",
-                            Price = 74.290000000000006,
-                            Quantity = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 3,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://www.motortrend.com/uploads/2021/10/rocket-bunny-gr86-complete-aero-kit-copy.png",
-                            Name = "Rocket bunny kit",
-                            Price = 849.99000000000001,
-                            Quantity = 7
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 3,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://i.ytimg.com/vi/LkHUeJROh7M/maxresdefault.jpg",
-                            Name = "Porsche 911 GT3 wide body kit",
-                            Price = 1250.0,
-                            Quantity = 6
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CategoryId = 4,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://titanmotorsports.com/cdn/shop/products/FRB586PortTopMountKit-1.jpg?v=1655318711",
-                            Name = "Single turbo universal kit",
-                            Price = 1249.99,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CategoryId = 4,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://cdn.shopify.com/s/files/1/0055/2098/2086/products/TurboKitMain_1000x.jpg?v=1651772131",
-                            Name = "Twin turbo universal kit",
-                            Price = 1789.0,
-                            Quantity = 6
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CategoryId = 5,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://i5.walmartimages.com/asr/8d2e309d-a02c-4ce8-8792-e21ff8193728.65fff7edfb470d3f39bdcd0968ed110f.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
-                            Name = "Tbest Rear Spoiler",
-                            Price = 283.0,
-                            Quantity = 23
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CategoryId = 5,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://www.swapshopracing.com/contents/media/l_carb-a690-nrg-05-.jpg",
-                            Name = "NRG Universal 69\" Black Real Carbon Fiber Spoiler",
-                            Price = 129.0,
-                            Quantity = 54
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CategoryId = 6,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://cdn4.wheelbasealloys.com/product-images/product-219413_108741_600.jpg",
-                            Name = "Vossen CVT Graphite 20\" Alloy Wheels",
-                            Price = 449.23000000000002,
-                            Quantity = 23
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CategoryId = 6,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa.",
-                            ImageUrl = "https://audiocityusa.com/shop/images/P/0-forgiato-forged-wheels-forgiato-blocco-gloss-black-with-mango-orange-accents-rims-audiocityusa-01-04.jpg",
-                            Name = "21\" Forgiato Wheels Blocco Gloss Black",
-                            Price = 549.88999999999999,
-                            Quantity = 43
-                        });
                 });
 
             modelBuilder.Entity("CarEnthusiasts.Data.Models.TuningPartCarModel", b =>

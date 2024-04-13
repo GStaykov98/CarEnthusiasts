@@ -464,6 +464,168 @@ namespace CarEnthusiasts.Data
                     CreatorId = "5ac561d9-127e-4017-8e82-19372d14c26a"
                 });
 
+            modelBuilder
+                .Entity<TuningPartCategory>()
+                .HasData(new TuningPartCategory()
+                {
+                    Id = 1,
+                    Name = "Sport seats",
+                    ImageUrl = "https://ic.carid.com/braum/seats/brr1x-whbs_0.jpg"
+                }, 
+                new TuningPartCategory()
+                {
+                    Id = 2,
+                    Name = "Sport steering wheels",
+                    ImageUrl = "https://evilspeed.eu/cdn/shop/products/Sport-Line-Competition-Steering-Wheel---Black-Suede-Black-Spokes-300mm_5587e715-5391-43c3-96eb-eb3f6a60d290.jpg?v=1666288910"
+                },
+                new TuningPartCategory()
+                {
+                    Id = 3,
+                    Name = "Body kits",
+                    ImageUrl = "https://image.made-in-china.com/2f0j00WFCleYPIYrpz/High-Quality-M4-Style-Body-Kit-for-BMW-4-Series-F32-F33-F36-420I-428I-Front-Bumper-Rear-Bumper-Side-Skirts-Wing-Spoiler.webp"
+                }, 
+                new TuningPartCategory()
+                {
+                    Id = 4,
+                    Name = "Turbo kits",
+                    ImageUrl = "https://www.turbozentrum.de/media/image/product/173750/lg/turbo-garrett-g40-900.jpg"
+                },
+                new TuningPartCategory()
+                {
+                    Id = 5,
+                    Name = "Spoilers",
+                    ImageUrl = "https://m.media-amazon.com/images/I/5151jRy7evL.jpg"
+                },
+                new TuningPartCategory()
+                {
+                    Id = 6,
+                    Name = "Rims",
+                    ImageUrl = "https://realtruck.com/production/fuel-black-red-reaction-wheels-01/6b053c7ab45cb34b2fd8df96b85ab902.jpg"
+                });
+
+            modelBuilder
+                .Entity<TuningPart>()
+                .HasData(new TuningPart()
+                {
+                    Id = 1,
+                    CategoryId = 1,
+                    Quantity = 5,
+                    Price = 249.99,
+                    ImageUrl = "https://m.media-amazon.com/images/I/71x5FmPr53L.jpg",
+                    Name = "2 Pieces Universal Racing Seats,With Dual Lock Sliders",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                }, 
+                new TuningPart()
+                {
+                    Id = 2,
+                    CategoryId = 1,
+                    Quantity = 2,
+                    Price = 135.50,
+                    ImageUrl = "https://www.outcastgarage.com/cdn/shop/products/BRR1R-BKRP_1_1800x1800.jpg?v=1540248523",
+                    Name = "BRAUM Racing Elite-R Series Racing Seats",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 3,
+                    CategoryId = 2,
+                    Quantity = 10,
+                    Price = 59.85,
+                    ImageUrl = "https://cdn.autostyle.co.za/wp-content/uploads/2022/06/28183552/X1-022CA.jpg",
+                    Name = "Type-R Sports Steering Wheel (Black & Carbon Fibre Design)",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 4,
+                    CategoryId = 2,
+                    Quantity = 3,
+                    Price = 74.29,
+                    ImageUrl = "https://www.kmpdrivetrain.com/wp-content/uploads/2020/04/4SW-01-600x600.png",
+                    Name = "KMP E-sport racing wheel",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 5,
+                    CategoryId = 3,
+                    Quantity = 7,
+                    Price = 849.99,
+                    ImageUrl = "https://www.motortrend.com/uploads/2021/10/rocket-bunny-gr86-complete-aero-kit-copy.png",
+                    Name = "Rocket bunny kit",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 6,
+                    CategoryId = 3,
+                    Quantity = 6,
+                    Price = 1250,
+                    ImageUrl = "https://i.ytimg.com/vi/LkHUeJROh7M/maxresdefault.jpg",
+                    Name = "Porsche 911 GT3 wide body kit",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 7,
+                    CategoryId = 4,
+                    Quantity = 8,
+                    Price = 1249.99,
+                    ImageUrl = "https://titanmotorsports.com/cdn/shop/products/FRB586PortTopMountKit-1.jpg?v=1655318711",
+                    Name = "Single turbo universal kit",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 8,
+                    CategoryId = 4,
+                    Quantity = 6,
+                    Price = 1789,
+                    ImageUrl = "https://cdn.shopify.com/s/files/1/0055/2098/2086/products/TurboKitMain_1000x.jpg?v=1651772131",
+                    Name = "Twin turbo universal kit",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 9,
+                    CategoryId = 5,
+                    Quantity = 23,
+                    Price = 283,
+                    ImageUrl = "https://i5.walmartimages.com/asr/8d2e309d-a02c-4ce8-8792-e21ff8193728.65fff7edfb470d3f39bdcd0968ed110f.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
+                    Name = "Tbest Rear Spoiler",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 10,
+                    CategoryId = 5,
+                    Quantity = 54,
+                    Price = 129,
+                    ImageUrl = "https://www.swapshopracing.com/contents/media/l_carb-a690-nrg-05-.jpg",
+                    Name = "NRG Universal 69\" Black Real Carbon Fiber Spoiler",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 11,
+                    CategoryId = 6,
+                    Quantity = 23,
+                    Price = 449.23,
+                    ImageUrl = "https://cdn4.wheelbasealloys.com/product-images/product-219413_108741_600.jpg",
+                    Name = "Vossen CVT Graphite 20\" Alloy Wheels",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                },
+                new TuningPart()
+                {
+                    Id = 12,
+                    CategoryId = 6,
+                    Quantity = 43,
+                    Price = 549.89,
+                    ImageUrl = "https://audiocityusa.com/shop/images/P/0-forgiato-forged-wheels-forgiato-blocco-gloss-black-with-mango-orange-accents-rims-audiocityusa-01-04.jpg",
+                    Name = "21\" Forgiato Wheels Blocco Gloss Black",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et ultricies mi. Aenean ornare venenatis turpis quis faucibus. Etiam rhoncus massa a dolor interdum, sit amet fringilla metus pellentesque. Quisque eleifend libero id elit ullamcorper, quis aliquet lacus commodo. Suspendisse aliquam, erat ut sollicitudin eleifend, massa arcu pretium odio, in ultrices ante nisi ut dui. Suspendisse metus justo, congue a diam vel, semper tristique massa."
+                });
+
             base.OnModelCreating(modelBuilder);
         }
 
