@@ -12,8 +12,6 @@ namespace CarEnthusiasts.Models
 
         public DateTime CreatedOn { get; set; }
 
-        public int Likes { get; set; }
-
         public ForumTopicType TopicType { get; set; }
     }
 }

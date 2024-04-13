@@ -28,7 +28,6 @@ namespace CarEnthusiasts.Controllers
                     Id = x.Id,
                     Creator = x.Creator.UserName,
                     CreatedOn = x.CreatedOn,
-                    Likes = x.LikeCounter, 
                     Title = x.Title,
                     TopicType = x.TopicType
                 })
@@ -464,6 +463,23 @@ namespace CarEnthusiasts.Controllers
             await data.SaveChangesAsync();
 
             return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> FollowedTopics()
+        {
+            var topics = await data.ForumTopics
+                .Where(x => x.ForumTopicsFollowers.Any(z => z.FollowerId == GetUserId()))
+                .Select(x => new ForumTopicViewModel
+                {
+                    Id = x.Id,
+                    Creator = x.Creator.UserName,
+                    CreatedOn = x.CreatedOn,
+                    Title = x.Title
+                })
+                .ToListAsync();
+
+            return View(topics);
         }
 
         private string GetUserId()

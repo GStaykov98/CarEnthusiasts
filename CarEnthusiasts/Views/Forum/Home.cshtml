@@ -2,7 +2,8 @@
 
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
-       <a asp-controller="Forum" asp-action="AddTopic" class="btn btn-primary mb-2 w-100 p-3 fw-bold">Add a new topic</a>
+    <a asp-controller="Forum" asp-action="AddTopic" class="btn btn-primary mb-2 w-100 p-3 fw-bold">Add a new topic</a>
+    <a asp-controller="Forum" asp-action="FollowedTopics" class="btn btn-outline-info mb-2 w-100 p-3 fw-bold">Followed topics</a>
 }
 
 @foreach (var type in ViewBag.ForumTypes)
