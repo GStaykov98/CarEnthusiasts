@@ -1,4 +1,6 @@
 using CarEnthusiasts.Data;
+using CarEnthusiasts.Data.Contracts.News;
+using CarEnthusiasts.Data.Services.News;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +21,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<INewsService, NewsService>();
 
 var app = builder.Build();
 
