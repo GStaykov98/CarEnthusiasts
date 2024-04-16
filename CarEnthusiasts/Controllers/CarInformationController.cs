@@ -1,123 +1,51 @@
-﻿using CarEnthusiasts.Data;
-using CarEnthusiasts.Models;
+﻿using CarEnthusiasts.Data.Contracts.CarInformation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CarEnthusiasts.Controllers
 {
     public class CarInformationController : Controller
     {
-        private readonly ApplicationDbContext data;
+        private readonly ICarInformationService cars;
 
-        public CarInformationController(ApplicationDbContext context)
+        public CarInformationController(ICarInformationService _cars)
         {
-            data = context;
+            cars = _cars;
         }
 
         public async Task<IActionResult> AllCars()
         {
-            var cars = await data.CarBrands
-                .AsNoTracking()
-                .OrderBy(x => x.Name)
-                .Select(x => new CarBrandsViewModel(
-                    x.Id,
-                    x.Name,
-                    x.ImageUrl))
-                .ToListAsync();
+            var brands = await cars.GetAllBrands();
 
-            return View(cars);
+            return View(brands);
         }
 
         public async Task<IActionResult> AllModels(int id)
         {
-            if (!CheckIfCarExists(id))
+            if (!await cars.BrandExists(id))
             {
                 return BadRequest();
             }
 
-            var models = await data.CarModels
-                .AsNoTracking()
-                .Where(i => i.BrandId == id)
-                .OrderBy(x => x.Name)
-                .Select(x => new CarModelsViewModel 
-                {
-                    Id = x.Id,
-                    Brand = x.Brand,
-                    Name = x.Name,
-                    ImageUrl = x.ImageUrl,
-                    ProductionStartYear = x.ProductionStartYear,
-                    ProductionEndYear = x.ProductionEndYear
-                })
-                .ToListAsync();
+            var models = await cars.GetAllModels(id);
 
             return View(models);
         }
 
         public async Task<IActionResult> ShowCarInformation(int brandId, int modelId)
         {
-            if (!CheckIfCarExists(brandId, modelId))
+            if (!await cars.BrandExists(brandId))
             {
                 return BadRequest();
             }
 
-            var currentCar = await data.CarModels
-                .Where(x => x.Id == modelId)
-                .AsNoTracking()
-                .Select(x => new CarFullInformationViewModel
-                {
-                    Id = x.Id,
-                    Brand = x.Brand.Name,
-                    Model = x.Name,
-                    ImageUrl = x.ImageUrl,
-                    ProductionStartYear = x.ProductionStartYear,
-                    ProductionEndYear = x.ProductionEndYear,
-                    DriveWheel = x.DriveWheel,
-                    Length = x.Length,
-                    Height = x.Height,
-                    Weigth = x.Weigth,
-                    Width = x.Width,
-                    Engines = x.Engines.Select(e => new CarEnginesViewModel
-                    {
-                        Id = e.Id,
-                        Name = e.Name,
-                        Acceleration = e.Acceleration,
-                        TopSpeed = e.TopSpeed,
-                        Aspiration = e.Aspiration,
-                        Displacement = e.Displacement,
-                        Gearbox = e.Gearbox,
-                        HorsePower = e.HorsePower,
-                        Torque = e.Torque,
-                        Type = e.Type
-                    }).ToList()
+            if (!await cars.ModelExists(modelId))
+            {
+                return BadRequest();
+            }
 
-                }).FirstAsync();
+            var currentCar = await cars.GetFullInformation(modelId);
 
             return View(currentCar);
-        }
-
-        private bool CheckIfCarExists(int brandId)
-        {
-            if (data.CarBrands.Any(x => x.Id == brandId))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool CheckIfCarExists(int brandId, int modelId)
-        {
-            if (data.CarBrands.Any(x => x.Id == brandId))
-            {
-                var currentCar = data.CarBrands.Include(m => m.Models).FirstOrDefault(c => c.Id == brandId);
-
-                if (currentCar != null && currentCar.Models.Any(x => x.Id == modelId))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

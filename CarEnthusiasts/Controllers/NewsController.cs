@@ -1,20 +1,16 @@
-﻿using CarEnthusiasts.Data;
-using CarEnthusiasts.Data.Contracts.News;
+﻿using CarEnthusiasts.Data.Contracts.News;
 using CarEnthusiasts.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace CarEnthusiasts.Controllers
 {
     public class NewsController : Controller
     {
-        private readonly ApplicationDbContext data;
         private readonly INewsService newsService;
 
-        public NewsController(ApplicationDbContext context, INewsService _news)
+        public NewsController(INewsService _news)
         {
-            data = context;
             newsService = _news;
         }
 
