@@ -1,4 +1,5 @@
 ﻿using CarEnthusiasts.Data;
+using CarEnthusiasts.Data.Contracts.Compare;
 using CarEnthusiasts.Data.Models;
 using CarEnthusiasts.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,32 +9,17 @@ namespace CarEnthusiasts.Controllers
 {
     public class CompareController : Controller
     {
-        private readonly ApplicationDbContext data;
+        private readonly ICompareService compareService;
 
-        public CompareController(ApplicationDbContext context)
+        public CompareController(ICompareService service)
         {
-            data = context;
+            compareService = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> CompareCars()
         {
-            var viewModel = new ComparisonViewModel
-            {
-                Cars = await data.CarModels
-                .Include(e => e.Engines)
-                .Select(x => new CarsDropdownViewModel
-                {
-                    Id = x.Id,
-                    FullName = x.Brand.Name + " - " + x.Name,
-                    Engines = x.Engines.Select(e => new EnginesDropdownViewModel
-                    {
-                        Id = e.Id,
-                        Name = e.Name
-                    }).ToList()
-                })
-                .ToListAsync()
-            };
+            var viewModel = await compareService.GettAllCars();
 
             return View(viewModel);
         }
@@ -58,50 +44,17 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            if (!data.CarModels.Any(x => x.Id == firstSelectedCarId) ||
-                !data.CarModels.Any(x => x.Id == secondSelectedCarId) ||
-                !data.CarModels.Any(e => e.Engines.Any(i => i.Id == firstSelectedCarEngineId)) ||
-                !data.CarModels.Any(x => x.Engines.Any(e => e.Id == secondSelectedCarEngineId)))
+            if (!await compareService.CarExist(firstSelectedCarId) ||
+                !await compareService.CarExist(secondSelectedCarId) ||
+                !await compareService.EngineExist(firstSelectedCarId, firstSelectedCarEngineId) ||
+                !await compareService.EngineExist(secondSelectedCarId, secondSelectedCarEngineId))
             {
                 return BadRequest();
             }
 
-            model.FirstCarFullInformation = await data.CarModels
-                .Include(e => e.Engines)
-                .Where(x => x.Id == firstSelectedCarId)
-                .Select(x => new ComparedCarViewModel
-                {
-                    Brand = x.Brand.Name,
-                    Model = x.Name,
-                    ImageUrl = x.ImageUrl,
-                    ProductionStartYear = x.ProductionStartYear,
-                    ProductionEndYear = x.ProductionEndYear,
-                    DriveWheel = x.DriveWheel,
-                    Length = x.Length,
-                    Height = x.Height,
-                    Weigth = x.Weigth,
-                    Width = x.Width,
-                    Engine = x.Engines.First(e => e.Id == firstSelectedCarEngineId)
-                }).FirstAsync();
+            model.FirstCarFullInformation = await compareService.GetCar(firstSelectedCarId, firstSelectedCarEngineId);
 
-            model.SecondCarFullInformation = await data.CarModels
-                .Include(e => e.Engines)
-                .Where(x => x.Id == secondSelectedCarId)
-                .Select(x => new ComparedCarViewModel
-                {
-                    Brand = x.Brand.Name,
-                    Model = x.Name,
-                    ImageUrl = x.ImageUrl,
-                    ProductionStartYear = x.ProductionStartYear,
-                    ProductionEndYear = x.ProductionEndYear,
-                    DriveWheel = x.DriveWheel,
-                    Length = x.Length,
-                    Height = x.Height,
-                    Weigth = x.Weigth,
-                    Width = x.Width,
-                    Engine = x.Engines.First(e => e.Id == secondSelectedCarEngineId)
-                })
-                .FirstAsync();
+            model.SecondCarFullInformation = await compareService.GetCar(secondSelectedCarId, secondSelectedCarEngineId);
 
             return View(model);
         }
