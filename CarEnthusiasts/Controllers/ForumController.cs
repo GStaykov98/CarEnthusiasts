@@ -15,13 +15,11 @@ namespace CarEnthusiasts.Controllers
 {
     public class ForumController : Controller
     {
-        private readonly ApplicationDbContext data;
         private readonly IForumService forumService;
         private readonly ICommentService commentService;
 
-        public ForumController(ApplicationDbContext context, IForumService _forumService, ICommentService _commentService)
+        public ForumController(IForumService _forumService, ICommentService _commentService)
         {
-            data = context;
             forumService = _forumService;
             commentService = _commentService;
         }

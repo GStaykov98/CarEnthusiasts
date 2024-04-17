@@ -4,11 +4,13 @@ using CarEnthusiasts.Data.Contracts.Comments;
 using CarEnthusiasts.Data.Contracts.Compare;
 using CarEnthusiasts.Data.Contracts.Forum;
 using CarEnthusiasts.Data.Contracts.News;
+using CarEnthusiasts.Data.Contracts.TuningParts;
 using CarEnthusiasts.Data.Services.CarInformation;
 using CarEnthusiasts.Data.Services.Comments;
 using CarEnthusiasts.Data.Services.Compare;
 using CarEnthusiasts.Data.Services.Forum;
 using CarEnthusiasts.Data.Services.News;
+using CarEnthusiasts.Data.Services.TuningParts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +36,7 @@ builder.Services.AddScoped<ICarInformationService, CarInformationService>();
 builder.Services.AddScoped<ICompareService, CompareService>();
 builder.Services.AddScoped<IForumService, ForumService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<ITuningPartsService, TuningPartsService>();
 
 var app = builder.Build();
 
