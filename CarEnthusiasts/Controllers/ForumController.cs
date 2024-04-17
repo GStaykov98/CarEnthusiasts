@@ -1,6 +1,9 @@
 ﻿using CarEnthusiasts.Data;
+using CarEnthusiasts.Data.Contracts.Comments;
+using CarEnthusiasts.Data.Contracts.Forum;
 using CarEnthusiasts.Data.Models;
 using CarEnthusiasts.Data.Models.Enums;
+using CarEnthusiasts.Data.Services.Comments;
 using CarEnthusiasts.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,26 +16,19 @@ namespace CarEnthusiasts.Controllers
     public class ForumController : Controller
     {
         private readonly ApplicationDbContext data;
+        private readonly IForumService forumService;
+        private readonly ICommentService commentService;
 
-        public ForumController(ApplicationDbContext context)
+        public ForumController(ApplicationDbContext context, IForumService _forumService, ICommentService _commentService)
         {
             data = context;
+            forumService = _forumService;
+            commentService = _commentService;
         }
 
         public async Task<IActionResult> Home()
         {
-            var topics = await data.ForumTopics
-                .Include(f => f.ForumTopicsFollowers)
-                .Select(x => new ForumTopicViewModel
-                {
-                    Id = x.Id,
-                    Creator = x.Creator.UserName,
-                    CreatedOn = x.CreatedOn,
-                    Title = x.Title,
-                    TopicType = x.TopicType
-                })
-                .OrderByDescending(x => x.CreatedOn)
-                .ToListAsync();
+            var topics = await forumService.GetAllTopics();
 
             ForumTopicType[] forumTopics = { ForumTopicType.General,
                 ForumTopicType.CommonProblems,
@@ -46,36 +42,12 @@ namespace CarEnthusiasts.Controllers
 
         public async Task<IActionResult> TopicDetails(int id)
         {
-            if (id < 0 &&
-                data.ForumTopics.Find(id) == null)
+            if (!await forumService.TopicExist(id))
             {
                 return BadRequest();
             }
 
-            var currentTopic = await data.ForumTopics
-                .Include(f => f.ForumTopicsFollowers)
-                .Include(l => l.ForumTopicsLikes)
-                .Include(c => c.Comments)
-                .ThenInclude(u => u.User)
-                .Select(x => new ForumTopicDetailsViewModel
-                {
-                    Id = x.Id,
-                    Creator = x.Creator,
-                    CreatedOn = x.CreatedOn,
-                    LikeCounter = x.LikeCounter,
-                    Title = x.Title,
-                    Comments = x.Comments,
-                    FollowerCounter = x.ForumTopicsFollowers.Count,
-                    ForumTopicsFollowers = x.ForumTopicsFollowers,
-                    ForumTopicsLikes = x.ForumTopicsLikes,
-                    Text = x.Text
-                })
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            if (currentTopic is null)
-            {
-                return BadRequest();
-            }
+            var currentTopic = await forumService.GetTopic(id);
 
             ViewBag.Title = currentTopic.Title;
 
@@ -88,22 +60,13 @@ namespace CarEnthusiasts.Controllers
         {
             if (!ModelState.IsValid ||
                 text is null ||
-                !data.ForumTopics.Any(x => x.Id == topicId) ||
+                !await forumService.TopicExist(topicId) ||
                 GetUserId() != userId)
             {
                 return BadRequest();
             }
 
-            var comment = new Comment
-            {
-                ForumTopicId = topicId,
-                UserId = userId,
-                CreatedDate = DateTime.Now,
-                Text = text
-            };
-
-            await data.Comments.AddAsync(comment);
-            await data.SaveChangesAsync();
+            await commentService.PostForumComment(text, topicId, userId);
 
             return RedirectToAction(nameof(TopicDetails), new { id = topicId });
         }
@@ -111,23 +74,17 @@ namespace CarEnthusiasts.Controllers
         [HttpGet]
         public async Task<IActionResult> EditComment(int id)
         {
-            var comment = await data.Comments.FindAsync(id);
-
-            if (comment is null)
+            if (!await commentService.CommentExists(id))
             {
                 return BadRequest();
             }
 
-            if (comment.UserId != GetUserId())
+            if (!await commentService.UserCommented(id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            var editCommentForm = new EditCommentViewModel()
-            {
-                Id = comment.Id,
-                Text = comment.Text
-            };
+            var editCommentForm = await commentService.GetCommentForm(id);
 
             return View(editCommentForm);
         }
@@ -140,21 +97,18 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            var comment = await data.Comments.FindAsync(model.Id);
-
-            if (comment is null)
+            if (!await commentService.CommentExists(model.Id))
             {
                 return BadRequest();
             }
 
-            if (comment.UserId != GetUserId())
+            if (!await commentService.UserCommented(model.Id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            comment.Text = model.Text;
-
-            await data.SaveChangesAsync();
+            var comment = await commentService.GetComment(model.Id);
+            await commentService.EditComment(model.Id, model.Text);
 
             return RedirectToAction(nameof(TopicDetails), new { id = comment.ForumTopicId });
         }
@@ -162,17 +116,17 @@ namespace CarEnthusiasts.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteComment(int id)
         {
-            var comment = await data.Comments.FindAsync(id);
-
-            if (comment is null)
+            if (!await commentService.CommentExists(id))
             {
                 return BadRequest();
             }
 
-            if (comment.UserId != GetUserId())
+            if (!await commentService.UserCommented(id, GetUserId()))
             {
                 return Unauthorized();
             }
+
+            var comment = await commentService.GetComment(id);
 
             var commentModel = new DeleteCommentViewModel()
             {
@@ -187,19 +141,18 @@ namespace CarEnthusiasts.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(DeleteCommentViewModel model)
         {
-            var comment = await data.Comments.FindAsync(model.Id);
-
             if (!ModelState.IsValid ||
-                comment is null ||
-                comment.UserId != GetUserId())
+                !await commentService.CommentExists(model.Id) ||
+                !await commentService.UserCommented(model.Id, GetUserId()))
             {
                 return BadRequest();
             }
 
+            var comment = await commentService.GetComment(model.Id);
+
             model.ForumTopicId = comment.ForumTopicId;
 
-            data.Comments.Remove(comment);
-            await data.SaveChangesAsync();
+            await commentService.DeleteComment(model.Id);
 
             return RedirectToAction(nameof(TopicDetails), new { id = model.ForumTopicId});
         }
@@ -228,18 +181,7 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            var topic = new ForumTopic()
-            {
-                Title = model.Title,
-                CreatedOn = DateTime.Now,
-                CreatorId = GetUserId(),
-                Text = model.Text,
-                TopicType = model.TopicType
-            };
-
-            await data.ForumTopics.AddAsync(topic);
-            await data.SaveChangesAsync();
-
+            await forumService.AddTopic(model, GetUserId());
             return RedirectToAction(nameof(Home));
         }
 
@@ -247,25 +189,17 @@ namespace CarEnthusiasts.Controllers
         [HttpGet]
         public async Task<IActionResult> EditTopic(int id)
         {
-            var topic = await data.ForumTopics.FindAsync(id);
-
-            if (topic is null)
+            if (!await forumService.TopicExist(id))
             {
                 return BadRequest();
             }
 
-            if (topic.CreatorId != GetUserId())
+            if (!await forumService.UserIsCreator(id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            var topicModel = new ForumTopicFormViewModel()
-            {
-                Id = topic.Id,
-                Title = topic.Title,
-                Text = topic.Text,
-                TopicType = topic.TopicType
-            };
+            var topicModel = await forumService.GetTopicForm(id);
 
             return View(topicModel);
         }
@@ -274,9 +208,7 @@ namespace CarEnthusiasts.Controllers
         [HttpPost]
         public async Task<IActionResult> EditTopic(ForumTopicFormViewModel model)
         {
-            var topic = await data.ForumTopics.FindAsync(model.Id);
-
-            if (topic is null)
+            if (!await forumService.TopicExist(model.Id))
             {
                 return BadRequest();
             }
@@ -286,35 +218,26 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            topic.Title = model.Title;
-            topic.Text = model.Text;
+            await forumService.EditTopic(model);
 
-            await data.SaveChangesAsync();
-
-            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id});
+            return RedirectToAction(nameof(TopicDetails), new { id = model.Id});
         }
 
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> DeleteTopic(int id)
         {
-            var topic = await data.ForumTopics.FindAsync(id);
-
-            if (topic is null)
+            if (!await forumService.TopicExist(id))
             {
                 return BadRequest();
             }
 
-            if (topic.CreatorId != GetUserId())
+            if (!await forumService.UserIsCreator(id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            var topicModel = new ForumTopicDeleteViewModel
-            {
-                Id = topic.Id,
-                Title = topic.Title
-            };
+            var topicModel = await forumService.GetDeleteForm(id);
 
             return View(topicModel);
         }
@@ -323,36 +246,17 @@ namespace CarEnthusiasts.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteTopicConfirmed(ForumTopicDeleteViewModel model)
         {
-            var topic = await data.ForumTopics
-                .Include(x => x.ForumTopicsFollowers)
-                .Include(c => c.Comments)
-                .FirstOrDefaultAsync(x => x.Id == model.Id);
-
-            if (topic is null)
+            if (!await forumService.TopicExist(model.Id))
             {
                 return BadRequest();
             }
 
-            if (topic.CreatorId != GetUserId())
+            if (!await forumService.UserIsCreator(model.Id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            var topicFollowers = topic.ForumTopicsFollowers.FirstOrDefault(x => x.ForumTopicId == topic.Id);
-            var comments = topic.Comments.FirstOrDefault(x => x.ForumTopicId == topic.Id);
-
-            if (comments is not null)
-            {
-                data.Comments.Remove(comments);
-            }
-
-            if (topicFollowers is not null)
-            {
-                data.ForumTopicsFollowers.Remove(topicFollowers);
-            }
-
-            data.ForumTopics.Remove(topic);
-            await data.SaveChangesAsync();
+            await forumService.DeleteTopic(model.Id);
 
             return RedirectToAction(nameof(Home));
         }
@@ -360,124 +264,78 @@ namespace CarEnthusiasts.Controllers
         [Authorize]
         public async Task<IActionResult> LikeTopic(int id)
         {
-            var topic = await data.ForumTopics
-                .Include(l => l.ForumTopicsLikes)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            if (topic is null ||
-                topic.ForumTopicsLikes.Any(x => x.UserId == GetUserId()))
+            if (!await forumService.TopicExist(id))
             {
                 return BadRequest();
             }
 
-            var topicLikeInteractor = new ForumTopicLikes
+            if (await forumService.TopicIsLiked(id, GetUserId()))
             {
-                UserId = GetUserId(),
-                ForumTopicId = topic.Id
-            };
+                return BadRequest();
+            }
 
-            topic.LikeCounter++;
-            await data.ForumTopicsLikes.AddAsync(topicLikeInteractor);
-            await data.SaveChangesAsync();
+            await forumService.LikeTopic(id, GetUserId());
 
-            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
+            return RedirectToAction(nameof(TopicDetails), new { id });
         }
 
         [Authorize]
         public async Task<IActionResult> RemoveLike(int id)
         {
-            var topic = await data.ForumTopics
-                .Include(tf => tf.ForumTopicsLikes)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            if (topic is null ||
-                !topic.ForumTopicsLikes.Any(x => x.UserId == GetUserId()))
+            if (!await forumService.TopicExist(id))
             {
                 return BadRequest();
             }
 
-            var topicLikeInteractor = await data.ForumTopicsLikes
-                .FirstOrDefaultAsync(x => x.ForumTopicId == id && x.UserId == GetUserId());
-
-            if (topicLikeInteractor is null)
+            if (!await forumService.TopicIsLiked(id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            topic.LikeCounter--;
-            data.ForumTopicsLikes.Remove(topicLikeInteractor);
-            await data.SaveChangesAsync();
+            await forumService.RemoveLike(id, GetUserId());
 
-            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
+            return RedirectToAction(nameof(TopicDetails), new { id });
         }
 
         [Authorize]
         public async Task<IActionResult> FollowTopic(int id)
         {
-            var topic = await data.ForumTopics
-                .Include(tf => tf.ForumTopicsFollowers)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            if (topic is null ||
-                topic.ForumTopicsFollowers.Any(x => x.FollowerId == GetUserId()))
+            if (!await forumService.TopicExist(id))
             {
                 return BadRequest();
             }
 
-            var topicFollower = new ForumTopicFollower
+            if (await forumService.TopicIsFollowed(id, GetUserId()))
             {
-                ForumTopicId = topic.Id,
-                FollowerId = GetUserId()
-            };
+                return BadRequest();
+            }
 
-            topic.FollowerCounter++;
-            await data.ForumTopicsFollowers.AddAsync(topicFollower);
-            await data.SaveChangesAsync();
+            await forumService.FollowTopic(id, GetUserId());
 
-            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
+            return RedirectToAction(nameof(TopicDetails), new { id });
         }
 
         [Authorize]
         public async Task<IActionResult> UnfollowTopic(int id)
         {
-            var topic = await data.ForumTopics
-                .Include(tf => tf.ForumTopicsFollowers)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            if (topic is null ||
-                !topic.ForumTopicsFollowers.Any(x => x.FollowerId == GetUserId()))
+            if (!await forumService.TopicExist(id))
+            {
+                return BadRequest();
+            }
+            if (!await forumService.TopicIsFollowed(id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            var topicFollower = await data.ForumTopicsFollowers
-                .FirstOrDefaultAsync(x => x.ForumTopicId == id && x.FollowerId == GetUserId());
+            await forumService.UnfollowTopic(id, GetUserId());
 
-            if (topicFollower is null)
-            {
-                return BadRequest();
-            }
-
-            topic.FollowerCounter--;
-            data.ForumTopicsFollowers.Remove(topicFollower);
-            await data.SaveChangesAsync();
-
-            return RedirectToAction(nameof(TopicDetails), new { id = topic.Id });
+            return RedirectToAction(nameof(TopicDetails), new { id });
         }
 
         [Authorize]
         public async Task<IActionResult> FollowedTopics()
         {
-            var topics = await data.ForumTopics
-                .Where(x => x.ForumTopicsFollowers.Any(z => z.FollowerId == GetUserId()))
-                .Select(x => new ForumTopicViewModel
-                {
-                    Id = x.Id,
-                    Creator = x.Creator.UserName,
-                    CreatedOn = x.CreatedOn,
-                    Title = x.Title
-                })
-                .ToListAsync();
+            var topics = await forumService.GetFollowedTopics(GetUserId());
 
             return View(topics);
         }

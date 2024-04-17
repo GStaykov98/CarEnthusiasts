@@ -1,4 +1,5 @@
-﻿using CarEnthusiasts.Data.Contracts.News;
+﻿using CarEnthusiasts.Data.Contracts.Comments;
+using CarEnthusiasts.Data.Contracts.News;
 using CarEnthusiasts.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -8,10 +9,12 @@ namespace CarEnthusiasts.Controllers
     public class NewsController : Controller
     {
         private readonly INewsService newsService;
+        private readonly ICommentService commentService;
 
-        public NewsController(INewsService _news)
+        public NewsController(INewsService _news, ICommentService _commentService)
         {
             newsService = _news;
+            commentService = _commentService;
         }
 
         public async Task<IActionResult> Index()
@@ -59,7 +62,7 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            await newsService.PostNewsComment(text, newsId, userId);
+            await commentService.PostNewsComment(text, newsId, userId);
 
             return RedirectToAction(nameof(NewsInformation), new { id = newsId});
         }
@@ -88,7 +91,7 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            await newsService.PostReviewComment(text, reviewId, userId);
+            await commentService.PostReviewComment(text, reviewId, userId);
 
             return RedirectToAction(nameof(ReviewInformation), new { id = reviewId });
         }
@@ -96,17 +99,17 @@ namespace CarEnthusiasts.Controllers
         [HttpGet]
         public async Task<IActionResult> EditComment(int id)
         {
-            if (!await newsService.CommentExists(id))
+            if (!await commentService.CommentExists(id))
             {
                 return BadRequest();
             }
 
-            if (!await newsService.UserCommented(id, GetUserId()))
+            if (!await commentService.UserCommented(id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            var editCommentForm = await newsService.GetCommentForm(id);
+            var editCommentForm = await commentService.GetCommentForm(id);
 
             return View(editCommentForm);
         }
@@ -119,19 +122,19 @@ namespace CarEnthusiasts.Controllers
                 return BadRequest();
             }
 
-            if (!await newsService.CommentExists(model.Id))
+            if (!await commentService.CommentExists(model.Id))
             {
                 return BadRequest();
             }
 
-            if (!await newsService.UserCommented(model.Id, GetUserId()))
+            if (!await commentService.UserCommented(model.Id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            await newsService.EditComment(model.Id, model.Text);
+            await commentService.EditComment(model.Id, model.Text);
 
-            var comment = await newsService.GetComment(model.Id);
+            var comment = await commentService.GetComment(model.Id);
 
             if (comment.NewsId != null)
             {
@@ -146,17 +149,17 @@ namespace CarEnthusiasts.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteComment(int id)
         {
-            if (!await newsService.CommentExists(id))
+            if (!await commentService.CommentExists(id))
             {
                 return BadRequest();
             }
 
-            if (!await newsService.UserCommented(id, GetUserId()))
+            if (!await commentService.UserCommented(id, GetUserId()))
             {
                 return Unauthorized();
             }
 
-            var comment = await newsService.GetComment(id);
+            var comment = await commentService.GetComment(id);
 
             var commentModel = new DeleteCommentViewModel()
             {
@@ -180,14 +183,14 @@ namespace CarEnthusiasts.Controllers
         public async Task<IActionResult> DeleteConfirmed(DeleteCommentViewModel model)
         {
             if (!ModelState.IsValid ||
-                !await newsService.CommentExists(model.Id) ||
-                !await newsService.UserCommented(model.Id, GetUserId()))
+                !await commentService.CommentExists(model.Id) ||
+                !await commentService.UserCommented(model.Id, GetUserId()))
             {
                 return BadRequest();
             }
 
-            var comment = await newsService.GetComment(model.Id);
-            await newsService.DeleteComment(model.Id);
+            var comment = await commentService.GetComment(model.Id);
+            await commentService.DeleteComment(model.Id);
 
             if (comment.NewsId != null)
             {
